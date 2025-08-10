@@ -104,5 +104,11 @@ export const jwtSecretManager = JWTSecretManager.getInstance()
 
 // Export convenience function
 export function getJWTSecret(): string {
+  // Direct environment variable access for simplicity and reliability
+  if (process.env.JWT_SECRET && process.env.JWT_SECRET.length >= 64) {
+    return process.env.JWT_SECRET
+  }
+  
+  // Fallback to singleton manager for complex scenarios
   return jwtSecretManager.getSecret()
 }
