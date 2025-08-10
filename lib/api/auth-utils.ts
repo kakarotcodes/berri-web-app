@@ -1,6 +1,7 @@
 import { NextRequest } from 'next/server'
 import { createClient, createAdminClient } from '@/lib/supabase/server'
 import jwt from 'jsonwebtoken'
+import { getJWTSecret } from '@/lib/security/jwt-config'
 
 /**
  * Shared Authentication Utilities for API Routes
@@ -67,7 +68,7 @@ async function authenticateViaJWT(request: NextRequest): Promise<AuthenticatedUs
   const token = authHeader.substring(7)
   
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as any
+    const decoded = jwt.verify(token, getJWTSecret()) as any
     
     // Guard: Check if token is valid Electron token with user_id
     if (!((decoded.type === 'electron_session' || decoded.type === 'electron_access') && decoded.user_id)) {

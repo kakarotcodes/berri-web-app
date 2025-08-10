@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient, createAdminClient } from '@/lib/supabase/server'
 import { refreshGoogleTokensIfNeeded } from '@/lib/auth/google-token-refresh'
 import jwt from 'jsonwebtoken'
+import { getJWTSecret } from '@/lib/security/jwt-config'
 
 // Get current user session
 export async function GET(request: NextRequest) {
@@ -40,7 +41,7 @@ async function authenticateElectronUser(request: NextRequest) {
   const token = authHeader.substring(7)
   
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as any
+    const decoded = jwt.verify(token, getJWTSecret()) as any
     
     // Guard: Check if token is valid Electron token with user_id
     if (!((decoded.type === 'electron_session' || decoded.type === 'electron_access') && decoded.user_id)) {

@@ -3,6 +3,7 @@ import { createAdminClient } from '@/lib/supabase/server'
 import { getGoogleTokens } from '@/lib/database/init'
 import { storeElectronRefreshToken } from '@/lib/database/refresh-tokens'
 import jwt from 'jsonwebtoken'
+import { getJWTSecret } from '@/lib/security/jwt-config'
 
 export async function POST(request: NextRequest) {
   try {
@@ -115,7 +116,7 @@ async function generateElectronTokens(user: any) {
       iat: Math.floor(Date.now() / 1000),
       exp: Math.floor(Date.now() / 1000) + (24 * 60 * 60)
     },
-    process.env.JWT_SECRET!
+    getJWTSecret()
   )
   
   // Generate long-lived refresh token (90 days, stored in database)

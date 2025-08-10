@@ -3,6 +3,7 @@ import { createAdminClient } from '@/lib/supabase/server'
 import { getGoogleTokens } from '@/lib/database/init'
 import { validateElectronRefreshToken, storeElectronRefreshToken, revokeElectronRefreshToken } from '@/lib/database/refresh-tokens'
 import jwt from 'jsonwebtoken'
+import { getJWTSecret } from '@/lib/security/jwt-config'
 
 export async function POST(request: NextRequest) {
   try {
@@ -101,7 +102,7 @@ async function generateAndRotateTokens(user: any, deviceId: string, oldRefreshTo
       iat: Math.floor(Date.now() / 1000),
       exp: Math.floor(Date.now() / 1000) + (24 * 60 * 60)
     },
-    process.env.JWT_SECRET!
+    getJWTSecret()
   )
   
   // Generate new refresh token and revoke the old one

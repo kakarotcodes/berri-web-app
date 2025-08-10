@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { storeGoogleTokens } from '@/lib/database/init'
 import jwt from 'jsonwebtoken'
+import { getJWTSecret } from '@/lib/security/jwt-config'
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
@@ -83,7 +84,7 @@ async function handleElectronAuth(user: any, session: any) {
       type: 'electron_exchange',
       exp: Math.floor(Date.now() / 1000) + 300 // 5 minutes expiry
     },
-    process.env.JWT_SECRET!
+    getJWTSecret()
   )
 
   // First redirect to landing page, then trigger custom protocol
