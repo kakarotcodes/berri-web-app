@@ -28,13 +28,21 @@ interface GmailEmail {
 
 export async function GET(request: NextRequest) {
   try {
+    // Debug authentication headers
+    console.log('🔍 Gmail API Debug:')
+    console.log('Authorization header:', request.headers.get('authorization'))
+    console.log('All headers:', Object.fromEntries(request.headers.entries()))
+    
     // Authenticate user using shared utility
     const user = await authenticateUser(request)
     
     // Guard: Ensure user is authenticated
     if (!user) {
+      console.log('❌ User authentication failed')
       return NextResponse.json({ error: 'Authentication required' }, { status: 401 })
     }
+    
+    console.log('✅ User authenticated:', { id: user.id, email: user.email })
 
     const userId = user.id
 
