@@ -95,7 +95,7 @@ export async function POST(request: NextRequest) {
 
       // Replace cid: with data URIs
       if (body && inlineImages.size > 0) {
-        for (const [cid, { attachmentId, mime }] of inlineImages) {
+        for (const [cid, { attachmentId, mime }] of Array.from(inlineImages.entries())) {
           try {
             const att = await gmail.users.messages.attachments.get({
               userId: 'me',
