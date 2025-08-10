@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
     const supabase = createClient();
     console.log(
       "redirect to",
-      `${process.env.NEXT_PUBLIC_APP_URL}/api/auth/google/callback?source=${
+      `https://berri.in/api/auth/google/callback?source=${
         source || "web"
       }`
     );
@@ -26,9 +26,7 @@ export async function GET(request: NextRequest) {
       options: {
         scopes:
           "https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/gmail.readonly",
-        redirectTo: `${
-          process.env.NEXT_PUBLIC_APP_URL
-        }/api/auth/google/callback?source=${source || "web"}`,
+        redirectTo: `https://berri.in/api/auth/google/callback?source=${source || "web"}`,
         queryParams: {
           access_type: "offline",
           prompt: "consent",
@@ -39,7 +37,7 @@ export async function GET(request: NextRequest) {
     // Guard: Handle OAuth initiation errors
     if (error) {
       return NextResponse.redirect(
-        `${process.env.NEXT_PUBLIC_APP_URL}/login?error=auth_failed`
+        `https://berri.in/login?error=auth_failed`
       );
     }
 
@@ -47,7 +45,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(data.url);
   } catch (error) {
     return NextResponse.redirect(
-      `${process.env.NEXT_PUBLIC_APP_URL}/login?error=server_error`
+      `https://berri.in/login?error=server_error`
     );
   }
 }

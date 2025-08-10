@@ -12,12 +12,12 @@ export async function GET(request: NextRequest) {
   
   // Guard: Handle OAuth errors
   if (error_param) {
-    return NextResponse.redirect(`${process.env.NEXT_PUBLIC_APP_URL}/login?error=${error_param}`)
+    return NextResponse.redirect(`https://berri.in/login?error=${error_param}`)
   }
 
   // Guard: Ensure authorization code exists
   if (!code) {
-    return NextResponse.redirect(`${process.env.NEXT_PUBLIC_APP_URL}/login?error=no_code`)
+    return NextResponse.redirect(`https://berri.in/login?error=no_code`)
   }
 
   try {
@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
     
     // Guard: Ensure session was created successfully
     if (error || !data.session) {
-      return NextResponse.redirect(`${process.env.NEXT_PUBLIC_APP_URL}/login?error=session_failed`)
+      return NextResponse.redirect(`https://berri.in/login?error=session_failed`)
     }
     
     const { session, user } = data
@@ -42,10 +42,10 @@ export async function GET(request: NextRequest) {
     }
     
     // Default to web app authentication
-    return NextResponse.redirect(`${process.env.NEXT_PUBLIC_APP_URL}/auth-success?source=web`)
+    return NextResponse.redirect(`https://berri.in/auth-success?source=web`)
     
   } catch (error) {
-    return NextResponse.redirect(`${process.env.NEXT_PUBLIC_APP_URL}/login?error=callback_failed`)
+    return NextResponse.redirect(`https://berri.in/login?error=callback_failed`)
   }
 }
 
@@ -88,5 +88,5 @@ async function handleElectronAuth(user: any, session: any) {
   )
 
   // First redirect to landing page, then trigger custom protocol
-  return NextResponse.redirect(`${process.env.NEXT_PUBLIC_APP_URL}/auth-success?source=electron&exchange_token=${exchangeToken}`)
+  return NextResponse.redirect(`https://berri.in/auth-success?source=electron&exchange_token=${exchangeToken}`)
 }
