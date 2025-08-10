@@ -30,8 +30,9 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      * - public folder
+     * - api/auth routes (OAuth callbacks need to run without middleware interference)
      * - api routes that don't need auth
      */
-    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+    '/((?!_next/static|_next/image|favicon.ico|api/auth|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
   ],
 }

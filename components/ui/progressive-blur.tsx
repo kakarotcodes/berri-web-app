@@ -51,7 +51,7 @@ export function ProgressiveBlur({
             style={{
               maskImage: gradient,
               WebkitMaskImage: gradient,
-              backdropFilter: `blur(${index * blurIntensity}px)`,
+              backdropFilter: `blur(${Math.max(0, index * blurIntensity)}px)`,
             }}
             {...props}
           />
