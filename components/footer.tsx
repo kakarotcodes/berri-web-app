@@ -46,7 +46,7 @@ export function Footer() {
                 <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-6">
                     <div className="lg:col-span-2">
                         <div className="mb-4 flex items-center space-x-2">
-                            <div className="flex size-8 items-center justify-center rounded-lg bg-gradient-to-br from-pink-500 to-purple-600">
+                            <div className="flex size-8 items-center justify-center rounded-lg bg-gradient-to-br from-pink-500 via-rose-500 to-red-500">
                                 <span className="text-lg font-bold text-white">B</span>
                             </div>
                             <span className="text-xl font-bold">Berri</span>

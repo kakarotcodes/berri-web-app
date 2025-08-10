@@ -59,7 +59,7 @@ export function Testimonials() {
                 <div className="mb-16 text-center">
                     <h2 className="text-3xl font-bold sm:text-4xl">
                         Loved by 
-                        <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent"> thousands</span>
+                        <span className="bg-gradient-to-r from-pink-500 via-rose-500 to-red-500 bg-clip-text text-transparent"> thousands</span>
                     </h2>
                     <p className="mt-4 text-lg text-muted-foreground">
                         See what our customers are saying about Berri

@@ -1,6 +1,6 @@
 'use client'
-import React from 'react'
-import { Mail, SendHorizonal, Menu, X, Zap } from 'lucide-react'
+import React, { useEffect, useState } from 'react'
+import { Menu, X, Zap, User } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { AnimatedGroup } from '@/components/ui/animated-group'
 import { cn } from '@/lib/utils'
@@ -8,6 +8,7 @@ import Link from 'next/link'
 import { InfiniteSlider } from '@/components/ui/infinite-slider'
 import { ProgressiveBlur } from '@/components/ui/progressive-blur'
 import { ThemeToggle } from '@/components/theme-toggle'
+import { createClient } from '@/lib/supabase/client'
 
 const transitionVariants = {
     item: {
@@ -51,14 +52,14 @@ export function HeroSection() {
                                     ...transitionVariants,
                                 }}
                             >
-                                <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-pink-500/10 to-purple-500/10 px-4 py-2 text-sm font-medium text-primary">
+                                <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-pink-500/10 via-rose-500/10 to-red-500/10 px-4 py-2 text-sm font-medium text-primary">
                                     <Zap className="size-4" />
                                     <span>Powered by AI</span>
                                 </div>
 
                                 <h1 className="text-balance text-4xl font-medium sm:text-5xl md:text-6xl">
                                     Transform your data into 
-                                    <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent"> intelligent insights</span>
+                                    <span className="bg-gradient-to-r from-pink-500 via-rose-500 to-red-500 bg-clip-text text-transparent"> intelligent insights</span>
                                 </h1>
 
                                 <p className="mx-auto mt-6 max-w-2xl text-pretty text-lg text-muted-foreground">
@@ -67,8 +68,10 @@ export function HeroSection() {
                                 </p>
 
                                 <div className="mt-12 flex flex-col gap-4 sm:flex-row sm:justify-center">
-                                    <Button size="lg" className="rounded-full">
-                                        Start Free Trial
+                                    <Button asChild size="lg" className="rounded-full">
+                                        <Link href="/login">
+                                            Start Free Trial
+                                        </Link>
                                     </Button>
                                     <Button variant="outline" size="lg" className="rounded-full">
                                         View Demo
@@ -151,9 +154,31 @@ const menuItems = [
     { name: 'Contact', href: '#contact' },
 ]
 
+interface User {
+    id: string
+    email?: string
+    user_metadata?: {
+        full_name?: string
+        avatar_url?: string
+    }
+}
+
+interface SessionData {
+    user: User | null
+    tokenStatus?: {
+        hasTokens: boolean
+        expired: boolean
+        expiresAt: string
+        scopes: string[]
+    }
+}
+
 const HeroHeader = () => {
     const [menuState, setMenuState] = React.useState(false)
     const [isScrolled, setIsScrolled] = React.useState(false)
+    const [sessionData, setSessionData] = useState<SessionData>({ user: null })
+    const [loading, setLoading] = useState(true)
+    const supabase = createClient()
 
     React.useEffect(() => {
         const handleScroll = () => {
@@ -162,6 +187,102 @@ const HeroHeader = () => {
         window.addEventListener('scroll', handleScroll)
         return () => window.removeEventListener('scroll', handleScroll)
     }, [])
+
+    useEffect(() => {
+        const checkAuth = async () => {
+            try {
+                // Check server-side session via Supabase SSR
+                const response = await fetch('/api/auth/session', {
+                    method: 'GET',
+                    credentials: 'include'
+                })
+
+                if (response.ok) {
+                    const data = await response.json()
+                    if (data.user) {
+                        setSessionData(data)
+                        setLoading(false)
+                        return
+                    }
+                }
+
+                // If no valid session, check for auth success indicators
+                await checkNewAuthCompletion()
+                
+            } catch (error) {
+                console.error('Failed to check session:', error)
+                await checkNewAuthCompletion()
+            }
+        }
+
+        const checkNewAuthCompletion = async () => {
+            // Check for auth success indicators (new authentication)
+            const authSuccess = sessionStorage.getItem('auth_success')
+            const urlParams = new URLSearchParams(window.location.search)
+            const urlAuthSuccess = urlParams.get('auth_success')
+            
+            if (authSuccess || urlAuthSuccess) {
+                // Auth just completed, refresh session from server
+                const response = await fetch('/api/auth/session', {
+                    method: 'GET',
+                    credentials: 'include'
+                })
+
+                if (response.ok) {
+                    const data = await response.json()
+                    if (data.user) {
+                        setSessionData(data)
+                    }
+                }
+
+                // Clear the temporary flags
+                sessionStorage.removeItem('auth_success')
+                if (urlAuthSuccess) {
+                    const url = new URL(window.location.href)
+                    url.searchParams.delete('auth_success')
+                    window.history.replaceState({}, '', url.toString())
+                }
+            }
+            
+            setLoading(false)
+        }
+
+        // Initial auth check
+        checkAuth()
+
+        // Listen for real-time auth changes
+        const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+            if (event === 'SIGNED_IN' && session) {
+                // Refresh session data when signed in
+                checkAuth()
+            } else if (event === 'SIGNED_OUT') {
+                setSessionData({ user: null })
+            }
+        })
+
+        return () => {
+            subscription.unsubscribe()
+        }
+    }, [supabase.auth])
+
+    const handleLogout = async () => {
+        try {
+            // Call secure logout API
+            await fetch('/api/auth/session', {
+                method: 'DELETE',
+                credentials: 'include'
+            })
+            
+            // Clear client state
+            setSessionData({ user: null })
+            sessionStorage.removeItem('auth_success')
+            
+            // Reload to clear any remaining state
+            window.location.reload()
+        } catch (error) {
+            console.error('Logout error:', error)
+        }
+    }
 
     return (
         <header>
@@ -217,31 +338,56 @@ const HeroHeader = () => {
                             </div>
                             <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
                                 <ThemeToggle />
-                                <Button
-                                    asChild
-                                    variant="outline"
-                                    size="sm"
-                                    className={cn(isScrolled && 'lg:hidden')}>
-                                    <Link href="#">
-                                        <span>Login</span>
-                                    </Link>
-                                </Button>
-                                <Button
-                                    asChild
-                                    size="sm"
-                                    className={cn(isScrolled && 'lg:hidden')}>
-                                    <Link href="#">
-                                        <span>Start Free Trial</span>
-                                    </Link>
-                                </Button>
-                                <Button
-                                    asChild
-                                    size="sm"
-                                    className={cn(isScrolled ? 'lg:inline-flex' : 'hidden')}>
-                                    <Link href="#">
-                                        <span>Get Started</span>
-                                    </Link>
-                                </Button>
+                                {loading ? (
+                                    <div className="animate-pulse">
+                                        <div className="h-8 w-8 bg-gray-200 rounded-full"></div>
+                                    </div>
+                                ) : sessionData.user ? (
+                                    <div className="flex items-center space-x-3">
+                                        <div className="flex items-center space-x-2">
+                                            <div className="flex size-8 items-center justify-center rounded-full bg-gradient-to-br from-pink-500 via-rose-500 to-red-500">
+                                                <User className="size-4 text-white" />
+                                            </div>
+                                            <span className="text-sm text-muted-foreground">
+                                                {sessionData.user.user_metadata?.full_name || sessionData.user.email}
+                                            </span>
+                                        </div>
+                                        <button
+                                            onClick={handleLogout}
+                                            className="text-sm text-muted-foreground hover:text-accent-foreground"
+                                        >
+                                            Logout
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <>
+                                        <Button
+                                            asChild
+                                            variant="outline"
+                                            size="sm"
+                                            className={cn(isScrolled && 'lg:hidden')}>
+                                            <Link href="/login">
+                                                <span>Login</span>
+                                            </Link>
+                                        </Button>
+                                        <Button
+                                            asChild
+                                            size="sm"
+                                            className={cn(isScrolled && 'lg:hidden')}>
+                                            <Link href="/login">
+                                                <span>Start Free Trial</span>
+                                            </Link>
+                                        </Button>
+                                        <Button
+                                            asChild
+                                            size="sm"
+                                            className={cn(isScrolled ? 'lg:inline-flex' : 'hidden')}>
+                                            <Link href="/login">
+                                                <span>Get Started</span>
+                                            </Link>
+                                        </Button>
+                                    </>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -333,7 +479,7 @@ const LogoCloud = () => {
 const BerriLogo = ({ className }: { className?: string }) => {
     return (
         <div className={cn('flex items-center space-x-2', className)}>
-            <div className="flex size-8 items-center justify-center rounded-lg bg-gradient-to-br from-pink-500 to-purple-600">
+            <div className="flex size-8 items-center justify-center rounded-lg bg-gradient-to-br from-pink-500 via-rose-500 to-red-500">
                 <span className="text-lg font-bold text-white">B</span>
             </div>
             <span className="text-xl font-bold">Berri</span>

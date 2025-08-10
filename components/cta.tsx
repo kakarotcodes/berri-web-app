@@ -16,7 +16,7 @@ export function CTA() {
 
                         <h2 className="mb-6 text-3xl font-bold sm:text-4xl md:text-5xl">
                             Transform your data into 
-                            <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent"> actionable insights</span>
+                            <span className="bg-gradient-to-r from-pink-500 via-rose-500 to-red-500 bg-clip-text text-transparent"> actionable insights</span>
                         </h2>
 
                         <p className="mx-auto mb-8 max-w-2xl text-lg text-muted-foreground">

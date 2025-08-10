@@ -8,7 +8,7 @@ export function Features() {
                 <div className="mb-16 text-center">
                     <h2 className="text-3xl font-bold sm:text-4xl">
                         Everything you need to 
-                        <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent"> unlock insights</span>
+                        <span className="bg-gradient-to-r from-pink-500 via-rose-500 to-red-500 bg-clip-text text-transparent"> unlock insights</span>
                     </h2>
                     <p className="mt-4 text-lg text-muted-foreground">
                         Powerful features designed to transform your data into actionable business intelligence
@@ -77,7 +77,7 @@ export function Features() {
                         <CardContent className="mt-auto h-fit">
                             <div className="relative mb-6 sm:mb-0">
                                 <div className="absolute -inset-6 [background:radial-gradient(50%_75%_at_75%_50%,transparent,hsl(var(--background))_100%)]"></div>
-                                <div className="aspect-square overflow-hidden rounded-r-lg border bg-gradient-to-br from-purple-50 to-pink-50 p-4 dark:from-purple-950/50 dark:to-pink-950/50">
+                                <div className="aspect-square overflow-hidden rounded-r-lg border bg-gradient-to-br from-red-50 to-pink-50 p-4 dark:from-red-950/50 dark:to-pink-950/50">
                                     <div className="space-y-3">
                                         <div className="flex items-center gap-2">
                                             <Brain className="size-4 text-purple-500" />
