@@ -69,15 +69,22 @@ export async function POST(request: NextRequest) {
 // Helper function to verify exchange token
 async function verifyExchangeToken(exchangeToken: string) {
   try {
-    const tokenPayload = jwt.verify(exchangeToken, process.env.JWT_SECRET!) as any
+    console.log('🔑 Verifying exchange token...')
+    console.log('🔑 Token length:', exchangeToken.length)
+    console.log('🔑 JWT Secret available:', !!getJWTSecret())
+    
+    const tokenPayload = jwt.verify(exchangeToken, getJWTSecret()) as any
+    console.log('✅ Token verified successfully:', { user_id: tokenPayload.user_id, type: tokenPayload.type })
     
     // Guard: Validate token payload structure
     if (!tokenPayload.user_id || !tokenPayload.email || tokenPayload.type !== 'electron_exchange') {
+      console.log('❌ Token payload validation failed:', tokenPayload)
       return null
     }
     
     return tokenPayload
   } catch (jwtError) {
+    console.log('❌ JWT verification failed:', jwtError.message)
     return null
   }
 }
