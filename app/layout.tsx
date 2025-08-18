@@ -6,7 +6,7 @@ import { ThemeProvider } from '@/components/theme-provider'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Berri - Transform Your Data Into Intelligent Insights',
+  title: 'Berri',
   description: 'AI-powered analytics platform that transforms your data into actionable business intelligence.',
 }
 

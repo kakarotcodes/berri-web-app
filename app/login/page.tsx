@@ -82,7 +82,7 @@ export default function LoginPage() {
               {/* Powered by AI badge */}
               <div className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-pink-500/10 via-rose-500/10 to-red-500/10 px-3 py-1 text-xs font-medium text-primary">
                 <Zap className="size-3" />
-                <span>Powered by AI</span>
+                <span>Private by design</span>
               </div>
             </div>
             
