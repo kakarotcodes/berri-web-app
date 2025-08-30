@@ -37,7 +37,7 @@ export async function GET(request: NextRequest) {
           "openid",
           "email",
           "profile",
-          "https://mail.google.com/",
+          "https://www.googleapis.com/auth/gmail.modify",
           "https://www.googleapis.com/auth/calendar",
         ].join(" "),
         redirectTo: `https://berri.in/api/auth/google/callback?source=${
