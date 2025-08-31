@@ -8,6 +8,9 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'Berri',
   description: 'AI-powered analytics platform that transforms your data into actionable business intelligence.',
+  icons: {
+    icon: '/assets/logos/logo1_top_left.png',
+  },
 }
 
 export default function RootLayout({

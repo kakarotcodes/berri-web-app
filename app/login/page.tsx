@@ -68,7 +68,7 @@ export default function LoginPage() {
           <div className="relative space-y-8 bg-background/80 backdrop-blur-sm border rounded-2xl p-8 shadow-lg dark:bg-background/50">
             {/* Logo and Header */}
             <div className="text-center space-y-4">
-              <div className="mx-auto flex size-16 items-center justify-center rounded-2xl bg-gradient-to-br from-pink-500 via-rose-500 to-red-500 shadow-lg">
+              <div className="mx-auto flex size-16 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-500 via-violet-500 to-teal-500 shadow-lg">
                 <span className="text-2xl font-bold text-white">B</span>
               </div>
               
@@ -80,7 +80,7 @@ export default function LoginPage() {
               </div>
 
               {/* Powered by AI badge */}
-              <div className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-pink-500/10 via-rose-500/10 to-red-500/10 px-3 py-1 text-xs font-medium text-primary">
+              <div className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-purple-500/10 via-violet-500/10 to-teal-500/10 px-3 py-1 text-xs font-medium text-primary">
                 <Zap className="size-3" />
                 <span>Private by design</span>
               </div>
@@ -109,7 +109,7 @@ export default function LoginPage() {
                 onClick={handleGoogleLogin}
                 disabled={loading}
                 size="lg"
-                className="w-full rounded-full bg-gradient-to-r from-pink-500 via-rose-500 to-red-500 hover:from-pink-600 hover:via-rose-600 hover:to-red-600 text-white border-0 shadow-lg"
+                className="w-full rounded-full bg-gradient-to-r from-purple-500 via-violet-500 to-teal-500 hover:from-purple-600 hover:via-violet-600 hover:to-teal-600 text-white border-0 shadow-lg"
               >
                 {loading ? (
                   <>

@@ -17,7 +17,7 @@ export function CTA() {
             <h2 className="mb-6 text-3xl font-bold sm:text-4xl md:text-5xl">
               {/* Transform your data into */}
               Why choose
-              <span className="bg-gradient-to-r from-pink-500 via-rose-500 to-red-500 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-purple-500 via-violet-500 to-teal-500 bg-clip-text text-transparent">
                 {" "}
                 Berri?
               </span>

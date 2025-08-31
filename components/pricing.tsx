@@ -59,7 +59,7 @@ export function Pricing() {
                 <div className="mb-16 text-center">
                     <h2 className="text-3xl font-bold sm:text-4xl">
                         Simple, transparent 
-                        <span className="bg-gradient-to-r from-pink-500 via-rose-500 to-red-500 bg-clip-text text-transparent"> pricing</span>
+                        <span className="bg-gradient-to-r from-purple-500 via-violet-500 to-teal-500 bg-clip-text text-transparent"> pricing</span>
                     </h2>
                     <p className="mt-4 text-lg text-muted-foreground">
                         Choose the perfect plan for your business needs. Upgrade or downgrade at any time.

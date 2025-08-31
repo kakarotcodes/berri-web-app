@@ -45,11 +45,13 @@ export function Footer() {
       <div className="mx-auto max-w-6xl px-6 py-16">
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-6">
           <div className="lg:col-span-2">
-            <div className="mb-4 flex items-center space-x-2">
-              <div className="flex size-8 items-center justify-center rounded-lg bg-gradient-to-br from-pink-500 via-rose-500 to-red-500">
-                <span className="text-lg font-bold text-white">B</span>
-              </div>
-              <span className="text-xl font-bold">Berri</span>
+            <div className="mb-4 flex items-center space-x-3">
+              <img 
+                src="/assets/logos/logo1_top_left.png" 
+                alt="Berri Logo" 
+                className="size-8 rounded-lg"
+              />
+              <span className="text-xl font-bold leading-none">Berri</span>
             </div>
             <p className="mb-6 max-w-sm text-muted-foreground">
               Berri is an always‑on‑top workspace for your everyday bits -
