@@ -137,22 +137,6 @@ export function Footer() {
           </div> */}
         </div>
 
-        <div className="mt-12 border-t pt-8">
-          <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-            <div className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} Berri. All rights reserved.
-            </div>
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Mail className="size-4" />
-                <span>support@berri.ai</span>
-              </div>
-              <Button variant="outline" size="sm">
-                Contact Support
-              </Button>
-            </div>
-          </div>
-        </div>
       </div>
     </footer>
   );

@@ -31,12 +31,10 @@ export function CTA() {
             </p>
 
             <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
-              <Button size="lg" className="group rounded-full">
-                Start Your Free Trial
-                <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-1" />
-              </Button>
-              <Button variant="outline" size="lg" className="rounded-full">
-                Schedule a Demo
+              <Button variant="outline" size="lg" className="rounded-full" asChild>
+                <a href="/guide">
+                  View Guide
+                </a>
               </Button>
             </div>
 
