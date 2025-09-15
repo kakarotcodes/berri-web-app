@@ -350,13 +350,12 @@ const HeroHeader = () => {
                   <>
                     <Button
                       asChild
-                      variant="outline"
                       size="sm"
                       className={cn(isScrolled && "lg:hidden")}
                     >
-                      <Link href="/login">
-                        <span>Login</span>
-                      </Link>
+                      <a href="https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.0.dmg" download>
+                        <span>Download for macOS</span>
+                      </a>
                     </Button>
                     <Button
                       asChild
@@ -372,9 +371,9 @@ const HeroHeader = () => {
                       size="sm"
                       className={cn(isScrolled ? "lg:inline-flex" : "hidden")}
                     >
-                      <Link href="/login">
-                        <span>Login</span>
-                      </Link>
+                      <a href="https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.0.dmg" download>
+                        <span>Download for macOS</span>
+                      </a>
                     </Button>
                   </>
                 )}
