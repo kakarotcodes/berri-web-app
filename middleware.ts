@@ -1,26 +1,37 @@
+// Middleware - authentication logic commented out to remove auth features
+
 import { type NextRequest, NextResponse } from 'next/server'
-import { createMiddlewareClient } from '@/lib/supabase/server'
+// import { createMiddlewareClient } from '@/lib/supabase/server'
 
 export async function middleware(request: NextRequest) {
-  try {
-    const { client, response } = createMiddlewareClient(request)
-
-    // Refresh session if expired - required for Server Components
-    await client.auth.getSession()
-
-    return response
-  } catch (e) {
-    // If you are here, a Supabase client could not be created!
-    // This is likely because you have not set up environment variables.
-    // Check out http://localhost:3000 for Next Steps.
-    console.error('Middleware error:', e)
-    return NextResponse.next({
-      request: {
-        headers: request.headers,
-      },
-    })
-  }
+  // Authentication disabled - just pass through all requests
+  return NextResponse.next({
+    request: {
+      headers: request.headers,
+    },
+  })
 }
+
+// export async function middleware(request: NextRequest) {
+//   try {
+//     const { client, response } = createMiddlewareClient(request)
+
+//     // Refresh session if expired - required for Server Components
+//     await client.auth.getSession()
+
+//     return response
+//   } catch (e) {
+//     // If you are here, a Supabase client could not be created!
+//     // This is likely because you have not set up environment variables.
+//     // Check out http://localhost:3000 for Next Steps.
+//     console.error('Middleware error:', e)
+//     return NextResponse.next({
+//       request: {
+//         headers: request.headers,
+//       },
+//     })
+//   }
+// }
 
 export const config = {
   matcher: [

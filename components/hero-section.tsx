@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Menu, X, Zap, User } from "lucide-react";
+import { Menu, X, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AnimatedGroup } from "@/components/ui/animated-group";
 import { cn } from "@/lib/utils";
@@ -8,7 +8,7 @@ import Link from "next/link";
 import { InfiniteSlider } from "@/components/ui/infinite-slider";
 import { ProgressiveBlur } from "@/components/ui/progressive-blur";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { createClient } from "@/lib/supabase/client";
+// import { createClient } from "@/lib/supabase/client";
 
 const transitionVariants = {
   item: {
@@ -83,12 +83,12 @@ export function HeroSection() {
                     </Link>
                   </Button>
                   <Button asChild variant="outline" size="lg" className="rounded-full">
-                    <Link href="/login" className="flex items-center gap-2">
+                    <a href="https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.0.dmg" download className="flex items-center gap-2">
                       <svg className="size-5" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
                       </svg>
                       Download for macOS
-                    </Link>
+                    </a>
                   </Button>
                 </div>
 
@@ -128,31 +128,31 @@ const menuItems = [
   { name: "Contact", href: "#contact" },
 ];
 
-interface User {
-  id: string;
-  email?: string;
-  user_metadata?: {
-    full_name?: string;
-    avatar_url?: string;
-  };
-}
+// interface User {
+//   id: string;
+//   email?: string;
+//   user_metadata?: {
+//     full_name?: string;
+//     avatar_url?: string;
+//   };
+// }
 
-interface SessionData {
-  user: User | null;
-  tokenStatus?: {
-    hasTokens: boolean;
-    expired: boolean;
-    expiresAt: string;
-    scopes: string[];
-  };
-}
+// interface SessionData {
+//   user: User | null;
+//   tokenStatus?: {
+//     hasTokens: boolean;
+//     expired: boolean;
+//     expiresAt: string;
+//     scopes: string[];
+//   };
+// }
 
 const HeroHeader = () => {
   const [menuState, setMenuState] = React.useState(false);
   const [isScrolled, setIsScrolled] = React.useState(false);
-  const [sessionData, setSessionData] = useState<SessionData>({ user: null });
-  const [loading, setLoading] = useState(true);
-  const supabase = createClient();
+  // const [sessionData, setSessionData] = useState<SessionData>({ user: null });
+  // const [loading, setLoading] = useState(true);
+  // const supabase = createClient();
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -162,102 +162,102 @@ const HeroHeader = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        // Check server-side session via Supabase SSR
-        const response = await fetch("/api/auth/session", {
-          method: "GET",
-          credentials: "include",
-        });
+  // useEffect(() => {
+  //   const checkAuth = async () => {
+  //     try {
+  //       // Check server-side session via Supabase SSR
+  //       const response = await fetch("/api/auth/session", {
+  //         method: "GET",
+  //         credentials: "include",
+  //       });
 
-        if (response.ok) {
-          const data = await response.json();
-          if (data.user) {
-            setSessionData(data);
-            setLoading(false);
-            return;
-          }
-        }
+  //       if (response.ok) {
+  //         const data = await response.json();
+  //         if (data.user) {
+  //           setSessionData(data);
+  //           setLoading(false);
+  //           return;
+  //         }
+  //       }
 
-        // If no valid session, check for auth success indicators
-        await checkNewAuthCompletion();
-      } catch (error) {
-        console.error("Failed to check session:", error);
-        await checkNewAuthCompletion();
-      }
-    };
+  //       // If no valid session, check for auth success indicators
+  //       await checkNewAuthCompletion();
+  //     } catch (error) {
+  //       console.error("Failed to check session:", error);
+  //       await checkNewAuthCompletion();
+  //     }
+  //   };
 
-    const checkNewAuthCompletion = async () => {
-      // Check for auth success indicators (new authentication)
-      const authSuccess = sessionStorage.getItem("auth_success");
-      const urlParams = new URLSearchParams(window.location.search);
-      const urlAuthSuccess = urlParams.get("auth_success");
+  //   const checkNewAuthCompletion = async () => {
+  //     // Check for auth success indicators (new authentication)
+  //     const authSuccess = sessionStorage.getItem("auth_success");
+  //     const urlParams = new URLSearchParams(window.location.search);
+  //     const urlAuthSuccess = urlParams.get("auth_success");
 
-      if (authSuccess || urlAuthSuccess) {
-        // Auth just completed, refresh session from server
-        const response = await fetch("/api/auth/session", {
-          method: "GET",
-          credentials: "include",
-        });
+  //     if (authSuccess || urlAuthSuccess) {
+  //       // Auth just completed, refresh session from server
+  //       const response = await fetch("/api/auth/session", {
+  //         method: "GET",
+  //         credentials: "include",
+  //       });
 
-        if (response.ok) {
-          const data = await response.json();
-          if (data.user) {
-            setSessionData(data);
-          }
-        }
+  //       if (response.ok) {
+  //         const data = await response.json();
+  //         if (data.user) {
+  //           setSessionData(data);
+  //         }
+  //       }
 
-        // Clear the temporary flags
-        sessionStorage.removeItem("auth_success");
-        if (urlAuthSuccess) {
-          const url = new URL(window.location.href);
-          url.searchParams.delete("auth_success");
-          window.history.replaceState({}, "", url.toString());
-        }
-      }
+  //       // Clear the temporary flags
+  //       sessionStorage.removeItem("auth_success");
+  //       if (urlAuthSuccess) {
+  //         const url = new URL(window.location.href);
+  //         url.searchParams.delete("auth_success");
+  //         window.history.replaceState({}, "", url.toString());
+  //       }
+  //     }
 
-      setLoading(false);
-    };
+  //     setLoading(false);
+  //   };
 
-    // Initial auth check
-    checkAuth();
+  //   // Initial auth check
+  //   checkAuth();
 
-    // Listen for real-time auth changes
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (event, session) => {
-      if (event === "SIGNED_IN" && session) {
-        // Refresh session data when signed in
-        checkAuth();
-      } else if (event === "SIGNED_OUT") {
-        setSessionData({ user: null });
-      }
-    });
+  //   // Listen for real-time auth changes
+  //   const {
+  //     data: { subscription },
+  //   } = supabase.auth.onAuthStateChange(async (event, session) => {
+  //     if (event === "SIGNED_IN" && session) {
+  //       // Refresh session data when signed in
+  //       checkAuth();
+  //     } else if (event === "SIGNED_OUT") {
+  //       setSessionData({ user: null });
+  //     }
+  //   });
 
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, [supabase.auth]);
+  //   return () => {
+  //     subscription.unsubscribe();
+  //   };
+  // }, [supabase.auth]);
 
-  const handleLogout = async () => {
-    try {
-      // Call secure logout API
-      await fetch("/api/auth/session", {
-        method: "DELETE",
-        credentials: "include",
-      });
+  // const handleLogout = async () => {
+  //   try {
+  //     // Call secure logout API
+  //     await fetch("/api/auth/session", {
+  //       method: "DELETE",
+  //       credentials: "include",
+  //     });
 
-      // Clear client state
-      setSessionData({ user: null });
-      sessionStorage.removeItem("auth_success");
+  //     // Clear client state
+  //     setSessionData({ user: null });
+  //     sessionStorage.removeItem("auth_success");
 
-      // Reload to clear any remaining state
-      window.location.reload();
-    } catch (error) {
-      console.error("Logout error:", error);
-    }
-  };
+  //     // Reload to clear any remaining state
+  //     window.location.reload();
+  //   } catch (error) {
+  //     console.error("Logout error:", error);
+  //   }
+  // };
 
   return (
     <header>
@@ -324,7 +324,7 @@ const HeroHeader = () => {
               </div>
               <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
                 <ThemeToggle />
-                {loading ? (
+                {/* {loading ? (
                   <div className="animate-pulse">
                     <div className="h-8 w-8 bg-gray-200 rounded-full"></div>
                   </div>
@@ -347,7 +347,7 @@ const HeroHeader = () => {
                     </button>
                   </div>
                 ) : (
-                  <>
+                  <> */}
                     <Button
                       asChild
                       size="sm"
@@ -357,15 +357,15 @@ const HeroHeader = () => {
                         <span>Download for macOS</span>
                       </a>
                     </Button>
-                    <Button
+                    {/* <Button
                       asChild
                       size="sm"
                       className={cn(isScrolled && "lg:hidden")}
                     >
-                      {/* <Link href="/login">
+                      <Link href="/login">
                         <span>Download for macOS</span>
-                      </Link> */}
-                    </Button>
+                      </Link>
+                    </Button> */}
                     <Button
                       asChild
                       size="sm"
@@ -375,8 +375,8 @@ const HeroHeader = () => {
                         <span>Download for macOS</span>
                       </a>
                     </Button>
-                  </>
-                )}
+                  {/* </>
+                )} */}
               </div>
             </div>
           </div>
