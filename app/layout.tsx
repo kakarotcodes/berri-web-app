@@ -1,22 +1,24 @@
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import '../globals.css'
-import { ThemeProvider } from '@/components/theme-provider'
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "../globals.css";
+import { ThemeProvider } from "@/components/theme-provider";
+import { Analytics } from "@vercel/analytics/next";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'Berri',
-  description: 'AI-powered analytics platform that transforms your data into actionable business intelligence.',
+  title: "Berri",
+  description:
+    "AI-powered analytics platform that transforms your data into actionable business intelligence.",
   icons: {
-    icon: '/assets/logos/logo1_top_left.png',
+    icon: "/assets/logos/logo1_top_left.png",
   },
-}
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
@@ -28,8 +30,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>
-  )
+  );
 }
