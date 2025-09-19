@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { track } from "@vercel/analytics";
 import { Menu, X, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AnimatedGroup } from "@/components/ui/animated-group";
@@ -67,25 +68,47 @@ export function HeroSection() {
                 <p className="mx-auto mt-6 max-w-2xl text-pretty text-lg text-muted-foreground">
                   {/* Berri empowers businesses to unlock the full potential of their data with AI-driven analytics, 
                                     automated reporting, and actionable insights that drive growth. */}
-                  Berri is an always‑on‑top workspace for your everyday
-                  bits - clipboard history, screenshots, and notes kept tidy and
+                  Berri is an always‑on‑top workspace for your everyday bits -
+                  clipboard history, screenshots, and notes kept tidy and
                   instantly searchable so you can stay in flow
                 </p>
 
                 <div className="mt-12 flex flex-col gap-4 sm:flex-row sm:justify-center">
                   <Button asChild size="lg" className="rounded-full">
                     <Link href="/guide" className="flex items-center gap-2">
-                      <svg className="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
-                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                      <svg
+                        className="size-5"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                      >
+                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
                       </svg>
                       Get Started Guide
                     </Link>
                   </Button>
-                  <Button asChild variant="outline" size="lg" className="rounded-full">
-                    <a href="https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.17.dmg" download className="flex items-center gap-2">
-                      <svg className="size-5" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                  <Button
+                    asChild
+                    variant="outline"
+                    size="lg"
+                    className="rounded-full"
+                  >
+                    <a
+                      href="https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.17.dmg"
+                      download
+                      className="flex items-center gap-2"
+                      onClick={() =>
+                        track("download_mac_os_click_1", { platform: "mac" })
+                      }
+                    >
+                      <svg
+                        className="size-5"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                      >
+                        <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
                       </svg>
                       Download for macOS
                     </a>
@@ -93,14 +116,17 @@ export function HeroSection() {
                 </div>
 
                 <div className="mt-16">
-                  <video 
+                  <video
                     className="mx-auto rounded-2xl shadow-2xl max-w-4xl w-full"
                     autoPlay
                     muted
                     loop
                     playsInline
                   >
-                    <source src="/assets/videos/demo1berri.mp4" type="video/mp4" />
+                    <source
+                      src="/assets/videos/demo1berri.mp4"
+                      type="video/mp4"
+                    />
                     Your browser does not support the video tag.
                   </video>
                 </div>
@@ -108,7 +134,6 @@ export function HeroSection() {
                 {/* <div className="mt-8 text-sm text-muted-foreground">
                   No credit card required • 14-day free trial
                 </div> */}
-
               </AnimatedGroup>
             </div>
           </div>
@@ -118,7 +143,6 @@ export function HeroSection() {
     </>
   );
 }
-
 
 const menuItems = [
   { name: "Features", href: "#features" },
@@ -348,16 +372,20 @@ const HeroHeader = () => {
                   </div>
                 ) : (
                   <> */}
-                    <Button
-                      asChild
-                      size="sm"
-                      className={cn(isScrolled && "lg:hidden")}
-                    >
-                      <a href="https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.17.dmg" download>
-                        <span>Download for macOS</span>
-                      </a>
-                    </Button>
-                    {/* <Button
+                <Button
+                  asChild
+                  size="sm"
+                  className={cn(isScrolled && "lg:hidden")}
+                >
+                  <a
+                    href="https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.17.dmg"
+                    download
+                    onClick={() => track('download_mac_os_click_2', { platform: 'mac' })}
+                  >
+                    <span>Download for macOS</span>
+                  </a>
+                </Button>
+                {/* <Button
                       asChild
                       size="sm"
                       className={cn(isScrolled && "lg:hidden")}
@@ -366,16 +394,20 @@ const HeroHeader = () => {
                         <span>Download for macOS</span>
                       </Link>
                     </Button> */}
-                    <Button
-                      asChild
-                      size="sm"
-                      className={cn(isScrolled ? "lg:inline-flex" : "hidden")}
-                    >
-                      <a href="https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.17.dmg" download>
-                        <span>Download for macOS</span>
-                      </a>
-                    </Button>
-                  {/* </>
+                <Button
+                  asChild
+                  size="sm"
+                  className={cn(isScrolled ? "lg:inline-flex" : "hidden")}
+                >
+                  <a
+                    href="https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.17.dmg"
+                    download
+                    onClick={() => track('download_mac_os_click_3', { platform: 'mac' })}
+                  >
+                    <span>Download for macOS</span>
+                  </a>
+                </Button>
+                {/* </>
                 )} */}
               </div>
             </div>
@@ -467,9 +499,9 @@ const LogoCloud = () => {
 const BerriLogo = ({ className }: { className?: string }) => {
   return (
     <div className={cn("flex items-center space-x-3", className)}>
-      <img 
-        src="/assets/logos/logo1_top_left.png" 
-        alt="Berri Logo" 
+      <img
+        src="/assets/logos/logo1_top_left.png"
+        alt="Berri Logo"
         className="size-8 rounded-lg"
       />
       <span className="text-xl font-bold leading-none">Berri</span>
