@@ -11,21 +11,16 @@ import { ProgressiveBlur } from "@/components/ui/progressive-blur";
 import { ThemeToggle } from "@/components/theme-toggle";
 // import { createClient } from "@/lib/supabase/client";
 
-const handleDownload = async (e: React.MouseEvent, downloadUrl: string, eventName: string) => {
+const handleDownload = (e: React.MouseEvent, downloadUrl: string, eventName: string) => {
   e.preventDefault();
 
-  try {
-    // Track with timeout to prevent hanging
-    await Promise.race([
-      track(eventName, { platform: 'mac' }),
-      new Promise(resolve => setTimeout(resolve, 500)) // 500ms max wait
-    ]);
-  } catch (error) {
-    console.warn('Analytics tracking failed:', error);
-  }
+  // Vercel Analytics track() is synchronous - just call it
+  track(eventName, { platform: 'mac' });
 
-  // Trigger download after tracking
-  window.location.href = downloadUrl;
+  // Add minimal delay to ensure the tracking request starts before navigation
+  setTimeout(() => {
+    window.location.href = downloadUrl;
+  }, 100);
 };
 
 const transitionVariants = {
@@ -113,11 +108,11 @@ export function HeroSection() {
                     className="rounded-full"
                   >
                     <a
-                      href="https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.21.dmg"
+                      href="https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.22.dmg"
                       download
                       className="flex items-center gap-2"
                       onClick={(e) =>
-                        handleDownload(e, "https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.21.dmg", "download_mac_os_click_1")
+                        handleDownload(e, "https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.22.dmg", "download_mac_os_click_1")
                       }
                     >
                       <svg
@@ -395,9 +390,9 @@ const HeroHeader = () => {
                   className={cn(isScrolled && "lg:hidden")}
                 >
                   <a
-                    href="https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.21.dmg"
+                    href="https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.22.dmg"
                     download
-                    onClick={(e) => handleDownload(e, 'https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.21.dmg', 'download_mac_os_click_2')}
+                    onClick={(e) => handleDownload(e, 'https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.22.dmg', 'download_mac_os_click_2')}
                   >
                     <span>Download for macOS</span>
                   </a>
@@ -417,9 +412,9 @@ const HeroHeader = () => {
                   className={cn(isScrolled ? "lg:inline-flex" : "hidden")}
                 >
                   <a
-                    href="https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.21.dmg"
+                    href="https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.22.dmg"
                     download
-                    onClick={(e) => handleDownload(e, 'https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.21.dmg', 'download_mac_os_click_3')}
+                    onClick={(e) => handleDownload(e, 'https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.22.dmg', 'download_mac_os_click_3')}
                   >
                     <span>Download for macOS</span>
                   </a>
