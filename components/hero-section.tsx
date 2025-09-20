@@ -96,7 +96,7 @@ export function HeroSection() {
                     className="rounded-full"
                   >
                     <a
-                      href="https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.19.dmg"
+                      href="https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.20.dmg"
                       download
                       className="flex items-center gap-2"
                       onClick={() =>
@@ -378,7 +378,7 @@ const HeroHeader = () => {
                   className={cn(isScrolled && "lg:hidden")}
                 >
                   <a
-                    href="https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.19.dmg"
+                    href="https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.20.dmg"
                     download
                     onClick={() => track('download_mac_os_click_2', { platform: 'mac' })}
                   >
@@ -400,7 +400,7 @@ const HeroHeader = () => {
                   className={cn(isScrolled ? "lg:inline-flex" : "hidden")}
                 >
                   <a
-                    href="https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.19.dmg"
+                    href="https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.20.dmg"
                     download
                     onClick={() => track('download_mac_os_click_3', { platform: 'mac' })}
                   >
