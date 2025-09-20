@@ -11,6 +11,23 @@ import { ProgressiveBlur } from "@/components/ui/progressive-blur";
 import { ThemeToggle } from "@/components/theme-toggle";
 // import { createClient } from "@/lib/supabase/client";
 
+const handleDownload = async (e: React.MouseEvent, downloadUrl: string, eventName: string) => {
+  e.preventDefault();
+
+  try {
+    // Track with timeout to prevent hanging
+    await Promise.race([
+      track(eventName, { platform: 'mac' }),
+      new Promise(resolve => setTimeout(resolve, 500)) // 500ms max wait
+    ]);
+  } catch (error) {
+    console.warn('Analytics tracking failed:', error);
+  }
+
+  // Trigger download after tracking
+  window.location.href = downloadUrl;
+};
+
 const transitionVariants = {
   item: {
     hidden: {
@@ -99,8 +116,8 @@ export function HeroSection() {
                       href="https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.20.dmg"
                       download
                       className="flex items-center gap-2"
-                      onClick={() =>
-                        track("download_mac_os_click_1", { platform: "mac" })
+                      onClick={(e) =>
+                        handleDownload(e, "https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.20.dmg", "download_mac_os_click_1")
                       }
                     >
                       <svg
@@ -380,7 +397,7 @@ const HeroHeader = () => {
                   <a
                     href="https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.20.dmg"
                     download
-                    onClick={() => track('download_mac_os_click_2', { platform: 'mac' })}
+                    onClick={(e) => handleDownload(e, 'https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.20.dmg', 'download_mac_os_click_2')}
                   >
                     <span>Download for macOS</span>
                   </a>
@@ -402,7 +419,7 @@ const HeroHeader = () => {
                   <a
                     href="https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.20.dmg"
                     download
-                    onClick={() => track('download_mac_os_click_3', { platform: 'mac' })}
+                    onClick={(e) => handleDownload(e, 'https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.20.dmg', 'download_mac_os_click_3')}
                   >
                     <span>Download for macOS</span>
                   </a>
