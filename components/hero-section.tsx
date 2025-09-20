@@ -113,11 +113,11 @@ export function HeroSection() {
                     className="rounded-full"
                   >
                     <a
-                      href="https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.20.dmg"
+                      href="https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.21.dmg"
                       download
                       className="flex items-center gap-2"
                       onClick={(e) =>
-                        handleDownload(e, "https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.20.dmg", "download_mac_os_click_1")
+                        handleDownload(e, "https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.21.dmg", "download_mac_os_click_1")
                       }
                     >
                       <svg
@@ -395,9 +395,9 @@ const HeroHeader = () => {
                   className={cn(isScrolled && "lg:hidden")}
                 >
                   <a
-                    href="https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.20.dmg"
+                    href="https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.21.dmg"
                     download
-                    onClick={(e) => handleDownload(e, 'https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.20.dmg', 'download_mac_os_click_2')}
+                    onClick={(e) => handleDownload(e, 'https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.21.dmg', 'download_mac_os_click_2')}
                   >
                     <span>Download for macOS</span>
                   </a>
@@ -417,9 +417,9 @@ const HeroHeader = () => {
                   className={cn(isScrolled ? "lg:inline-flex" : "hidden")}
                 >
                   <a
-                    href="https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.20.dmg"
+                    href="https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.21.dmg"
                     download
-                    onClick={(e) => handleDownload(e, 'https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.20.dmg', 'download_mac_os_click_3')}
+                    onClick={(e) => handleDownload(e, 'https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.21.dmg', 'download_mac_os_click_3')}
                   >
                     <span>Download for macOS</span>
                   </a>
