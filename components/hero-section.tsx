@@ -1,7 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { track } from "@vercel/analytics";
 import { Menu, X, Zap } from "lucide-react";
+import { trackDownload } from "@/lib/analytics/ga4";
+import type { DownloadButtonLocation } from "@/lib/analytics/types";
 import { Button } from "@/components/ui/button";
 import { AnimatedGroup } from "@/components/ui/animated-group";
 import { cn } from "@/lib/utils";
@@ -11,11 +12,19 @@ import { ProgressiveBlur } from "@/components/ui/progressive-blur";
 import { ThemeToggle } from "@/components/theme-toggle";
 // import { createClient } from "@/lib/supabase/client";
 
-const handleDownload = (e: React.MouseEvent, downloadUrl: string, eventName: string) => {
+const handleDownload = (
+  e: React.MouseEvent,
+  downloadUrl: string,
+  buttonLocation: DownloadButtonLocation
+) => {
   e.preventDefault();
 
-  // Vercel Analytics track() is synchronous - just call it
-  track(eventName, { platform: 'mac' });
+  // Extract version from URL (e.g., "berri-1.0.24.dmg" -> "1.0.24")
+  const versionMatch = downloadUrl.match(/berri-(\d+\.\d+\.\d+)\.dmg/);
+  const version = versionMatch ? versionMatch[1] : "unknown";
+
+  // Track download with GA4
+  trackDownload(buttonLocation, downloadUrl, version);
 
   // Add minimal delay to ensure the tracking request starts before navigation
   setTimeout(() => {
@@ -112,7 +121,7 @@ export function HeroSection() {
                       download
                       className="flex items-center gap-2"
                       onClick={(e) =>
-                        handleDownload(e, "https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.24.dmg", "download_mac_os_click_1")
+                        handleDownload(e, "https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.24.dmg", "hero_main")
                       }
                     >
                       <svg
@@ -392,7 +401,7 @@ const HeroHeader = () => {
                   <a
                     href="https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.24.dmg"
                     download
-                    onClick={(e) => handleDownload(e, 'https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.24.dmg', 'download_mac_os_click_2')}
+                    onClick={(e) => handleDownload(e, 'https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.24.dmg', 'mobile_menu')}
                   >
                     <span>Download for macOS</span>
                   </a>
@@ -414,7 +423,7 @@ const HeroHeader = () => {
                   <a
                     href="https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.24.dmg"
                     download
-                    onClick={(e) => handleDownload(e, 'https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.24.dmg', 'download_mac_os_click_3')}
+                    onClick={(e) => handleDownload(e, 'https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.24.dmg', 'scrolled_header')}
                   >
                     <span>Download for macOS</span>
                   </a>
