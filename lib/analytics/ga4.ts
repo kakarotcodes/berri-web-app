@@ -82,7 +82,14 @@ export const trackDownload = (
     value: 1, // For conversion tracking
   }
 
-  sendGA4Event('download_mac_os', params)
+  // Send unique event name based on button location
+  const eventNameMap = {
+    'hero_main': 'download_mac_os_main',
+    'mobile_menu': 'download_mac_os_mobile',
+    'scrolled_header': 'download_mac_os_header',
+  }
+  const eventName = eventNameMap[buttonLocation]
+  sendGA4Event(eventName, params)
 
   // Optional: Also send as generic 'click' event for backup tracking
   sendGA4Event('click', {

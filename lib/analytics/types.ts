@@ -54,7 +54,9 @@ export type GA4EventName =
   | 'click'
 
   // Custom events for Berri
-  | 'download_mac_os'
+  | 'download_mac_os_main'
+  | 'download_mac_os_mobile'
+  | 'download_mac_os_header'
   | 'guide_navigation'
   | 'theme_toggle'
 
