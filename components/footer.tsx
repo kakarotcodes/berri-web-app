@@ -46,9 +46,9 @@ export function Footer() {
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-6">
           <div className="lg:col-span-2">
             <div className="mb-4 flex items-center space-x-3">
-              <img 
-                src="/assets/logos/logo1_top_left.png" 
-                alt="Berri Logo" 
+              <img
+                src="/assets/logos/logo1_top_left.svg"
+                alt="Berri Logo"
                 className="size-8 rounded-lg"
               />
               <span className="text-xl font-bold leading-none">Berri</span>

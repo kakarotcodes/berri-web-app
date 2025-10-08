@@ -145,7 +145,7 @@ export function HeroSection() {
                     playsInline
                   >
                     <source
-                      src="/assets/videos/demo1berri.mp4"
+                      src="https://jkrehaebvmsjnymdtysa.supabase.co/storage/v1/object/public/web-app/berri_updated_video_web.mp4"
                       type="video/mp4"
                     />
                     Your browser does not support the video tag.
@@ -521,7 +521,7 @@ const BerriLogo = ({ className }: { className?: string }) => {
   return (
     <div className={cn("flex items-center space-x-3", className)}>
       <img
-        src="/assets/logos/logo1_top_left.png"
+        src="/assets/logos/logo1_top_left.svg"
         alt="Berri Logo"
         className="size-8 rounded-lg"
       />
