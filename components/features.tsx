@@ -30,11 +30,10 @@ export function Features() {
                   <div className="flex size-10 items-center justify-center rounded-lg bg-teal-500/10">
                     <BarChart3 className="size-5 text-teal-500" />
                   </div>
-                  <p className="font-medium">File Management</p>
+                  <p className="font-medium">Mini Browser</p>
                 </div>
                 <p className="text-muted-foreground mt-3 max-w-sm text-sm">
-                  Organize and manage your files efficiently with intelligent
-                  categorization and instant search capabilities.
+                  Browse the web without leaving your workspace with an integrated mini browser.
                 </p>
               </div>
             </CardHeader>
@@ -42,9 +41,9 @@ export function Features() {
             <div className="relative h-fit pl-6 md:pl-12">
               <div className="bg-background overflow-hidden rounded-tl-lg border-l border-t pl-2 pt-2 dark:bg-zinc-950">
                 <div className="h-80 rounded-lg p-4">
-                  <img 
-                    src="/assets/features/featureFilemaganement.png" 
-                    alt="File Management Feature" 
+                  <img
+                    src="https://jkrehaebvmsjnymdtysa.supabase.co/storage/v1/object/public/web-app/browser.png"
+                    alt="Mini Browser Feature"
                     className="w-full h-full object-contain rounded-lg"
                   />
                 </div>
@@ -70,9 +69,9 @@ export function Features() {
             <CardContent className="mt-auto h-fit">
               <div className="relative mb-6 sm:mb-0">
                 <div className="h-64 overflow-hidden rounded-lg border p-4">
-                  <img 
-                    src="/assets/features/featureclipboardHistory.png" 
-                    alt="Clipboard History Feature" 
+                  <img
+                    src="https://jkrehaebvmsjnymdtysa.supabase.co/storage/v1/object/public/web-app/featureclipboardHistory.png"
+                    alt="Clipboard History Feature"
                     className="w-full h-full object-contain rounded-lg"
                   />
                 </div>
@@ -97,9 +96,9 @@ export function Features() {
 
             <div className="flex justify-center">
               <div className="w-full max-w-64">
-                <img 
-                  src="/assets/features/notesfeature.png" 
-                  alt="Notes Feature" 
+                <img
+                  src="https://jkrehaebvmsjnymdtysa.supabase.co/storage/v1/object/public/web-app/notesfeature.png"
+                  alt="Notes Feature"
                   className="w-full h-auto object-contain rounded-lg"
                 />
               </div>

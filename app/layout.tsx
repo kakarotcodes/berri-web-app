@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   description:
     "AI-powered analytics platform that transforms your data into actionable business intelligence.",
   icons: {
-    icon: "/assets/logos/logo1_top_left.png",
+    icon: "/assets/logos/logo1_top_left.svg",
   },
 };
 
