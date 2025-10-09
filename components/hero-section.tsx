@@ -19,7 +19,6 @@ const handleDownload = (
 ) => {
   e.preventDefault();
 
-  // Extract version from URL (e.g., "berri-1.0.24.dmg" -> "1.0.24")
   const versionMatch = downloadUrl.match(/berri-(\d+\.\d+\.\d+)\.dmg/);
   const version = versionMatch ? versionMatch[1] : "unknown";
 
@@ -117,11 +116,11 @@ export function HeroSection() {
                     className="rounded-full"
                   >
                     <a
-                      href="https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.24.dmg"
+                      href="https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.1.0.dmg"
                       download
                       className="flex items-center gap-2"
                       onClick={(e) =>
-                        handleDownload(e, "https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.24.dmg", "hero_main")
+                        handleDownload(e, "https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.1.0.dmg", "hero_main")
                       }
                     >
                       <svg
@@ -399,9 +398,9 @@ const HeroHeader = () => {
                   className={cn(isScrolled && "lg:hidden")}
                 >
                   <a
-                    href="https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.24.dmg"
+                    href="https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.1.0.dmg"
                     download
-                    onClick={(e) => handleDownload(e, 'https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.24.dmg', 'mobile_menu')}
+                    onClick={(e) => handleDownload(e, 'https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.1.0.dmg', 'mobile_menu')}
                   >
                     <span>Download for macOS</span>
                   </a>
@@ -421,9 +420,9 @@ const HeroHeader = () => {
                   className={cn(isScrolled ? "lg:inline-flex" : "hidden")}
                 >
                   <a
-                    href="https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.24.dmg"
+                    href="https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.1.0.dmg"
                     download
-                    onClick={(e) => handleDownload(e, 'https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.0.24.dmg', 'scrolled_header')}
+                    onClick={(e) => handleDownload(e, 'https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.1.0.dmg', 'scrolled_header')}
                   >
                     <span>Download for macOS</span>
                   </a>

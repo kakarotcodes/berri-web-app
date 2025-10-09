@@ -63,7 +63,7 @@ export const sendGA4Event = (
  *
  * @param buttonLocation - Where the download button was clicked
  * @param downloadUrl - Full URL of the download file
- * @param version - Version number of the download (e.g., "1.0.24")
+ * @param version - Version number of the download (e.g., "1.1.0")
  */
 export const trackDownload = (
   buttonLocation: DownloadButtonLocation,
