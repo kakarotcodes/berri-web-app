@@ -42,7 +42,7 @@ export async function authenticateUser(request: NextRequest): Promise<Authentica
  * Authenticate via Supabase SSR (web app users)
  */
 async function authenticateViaSupabase(): Promise<AuthenticatedUser | null> {
-  const supabase = createClient()
+  const supabase = await createClient()
   const { data: { user }, error } = await supabase.auth.getUser()
   
   // Guard: Check if Supabase user exists and is valid

@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -8,7 +8,7 @@ import { CheckCircle, Mail, Download, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import { trackDownload } from '@/lib/analytics/ga4'
 
-export default function SuccessPage() {
+function SuccessPageContent() {
   const searchParams = useSearchParams()
   const plan = searchParams.get('plan')
   const [mounted, setMounted] = useState(false)
@@ -18,17 +18,9 @@ export default function SuccessPage() {
 
     // Track conversion
     if (typeof window !== 'undefined' && window.gtag) {
-      const planPrices = {
-        monthly: 5,
-        yearly: 50,
-        lifetime: 149,
-      }
-
-      const price = planPrices[plan as keyof typeof planPrices] || 0
-
       window.gtag('event', 'purchase', {
         currency: 'USD',
-        value: price,
+        value: 30,
         transaction_id: `txn_${Date.now()}`,
       })
     }
@@ -152,5 +144,17 @@ export default function SuccessPage() {
         </CardContent>
       </Card>
     </div>
+  )
+}
+
+export default function SuccessPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="animate-pulse">Loading...</div>
+      </div>
+    }>
+      <SuccessPageContent />
+    </Suspense>
   )
 }

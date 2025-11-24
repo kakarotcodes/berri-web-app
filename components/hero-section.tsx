@@ -41,7 +41,7 @@ const transitionVariants = {
       opacity: 1,
       y: 0,
       transition: {
-        type: "spring",
+        type: "spring" as const,
         bounce: 0.3,
         duration: 1.5,
       },
@@ -68,7 +68,7 @@ export function HeroSection() {
                       },
                     },
                   },
-                  ...transitionVariants,
+                  item: transitionVariants.item,
                 }}
               >
                 <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-purple-500/10 via-violet-500/10 to-teal-500/10 px-4 py-2 text-sm font-medium text-primary">

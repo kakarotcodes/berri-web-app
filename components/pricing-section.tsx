@@ -3,88 +3,42 @@
 import { PricingCard } from '@/components/pricing/pricing-card'
 import { usePurchase } from '@/lib/hooks/usePurchase'
 import { trackDownload } from '@/lib/analytics/ga4'
-import { ArrowRight, Sparkles } from 'lucide-react'
-import Link from 'next/link'
+import { Sparkles } from 'lucide-react'
 
 const pricingPlans = [
   {
     id: 'free',
     name: 'Free',
-    description: 'Perfect for trying out Berri',
+    description: 'Try Berri with core features',
     price: 0,
     billingPeriod: 'forever' as const,
     features: [
-      '5 modules',
-      '1 custom website',
-      'Unlimited clipboard history',
-      'Basic screenshots',
-      'Community support',
+      '5 Quick Tools',
+      '1 quick website',
+      'Keyboard shortcuts',
     ],
     cta: 'Download Free',
     ctaVariant: 'outline' as const,
     popular: false,
   },
   {
-    id: 'monthly',
-    name: 'Pro Monthly',
-    description: 'Full features, billed monthly',
-    price: 5,
-    billingPeriod: 'month' as const,
-    features: [
-      '12 modules',
-      '12 custom websites',
-      'Unlimited clipboard history',
-      'Advanced screenshots',
-      'Incognito mode',
-      'Priority support',
-      'All future updates',
-    ],
-    cta: 'Start Pro Monthly',
-    ctaVariant: 'default' as const,
-    popular: false,
-    badge: 'Flexible',
-  },
-  {
-    id: 'yearly',
-    name: 'Pro Yearly',
-    description: 'Best value - save 17%',
-    price: 50,
-    billingPeriod: 'year' as const,
-    priceNote: '$4.17/month',
-    features: [
-      '12 modules',
-      '12 custom websites',
-      'Unlimited clipboard history',
-      'Advanced screenshots',
-      'Incognito mode',
-      'Priority support',
-      'All future updates',
-    ],
-    cta: 'Start Pro Yearly',
-    ctaVariant: 'default' as const,
-    popular: true,
-    badge: 'Most Popular',
-  },
-  {
     id: 'lifetime',
     name: 'Lifetime',
-    description: 'Pay once, use forever',
-    price: 149,
+    description: 'Pay once, own it forever',
+    price: 30,
     billingPeriod: 'one-time' as const,
     features: [
-      '12 modules',
-      '12 custom websites',
-      'Unlimited clipboard history',
-      'Advanced screenshots',
+      'All Quick Tools',
+      '12 quick websites',
+      'Keyboard shortcuts',
       'Incognito mode',
       'Lifetime updates',
-      'Priority support forever',
-      '5 device activations',
+      '2 device activations',
     ],
     cta: 'Get Lifetime Access',
     ctaVariant: 'default' as const,
-    popular: false,
-    badge: 'Best Deal',
+    popular: true,
+    badge: 'One-Time Payment',
     highlight: true,
   },
 ]
@@ -102,7 +56,7 @@ export function PricingSection() {
       }, 100)
     } else {
       // Handle paid checkout
-      initiateCheckout(planId as 'monthly' | 'yearly' | 'lifetime')
+      initiateCheckout('lifetime')
     }
   }
 
@@ -123,12 +77,12 @@ export function PricingSection() {
             </span>
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            Start free, upgrade when you're ready. All plans include the core features you love.
+            Start free or get lifetime access. No subscriptions, no recurring fees.
           </p>
         </div>
 
         {/* Pricing Cards */}
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+        <div className="mx-auto grid max-w-4xl gap-8 md:grid-cols-2">
           {pricingPlans.map((plan) => (
             <PricingCard
               key={plan.id}
@@ -136,7 +90,6 @@ export function PricingSection() {
               description={plan.description}
               price={plan.price}
               billingPeriod={plan.billingPeriod}
-              priceNote={plan.priceNote}
               features={plan.features}
               cta={plan.cta}
               ctaVariant={plan.ctaVariant}
@@ -159,17 +112,8 @@ export function PricingSection() {
         {/* Additional info */}
         <div className="mt-12 text-center">
           <p className="text-sm text-muted-foreground">
-            All paid plans include a 30-day money-back guarantee. No questions asked.
+            Lifetime plan includes a 15-day money-back guarantee. No questions asked.
           </p>
-          <div className="mt-4">
-            <Link
-              href="/pricing"
-              className="inline-flex items-center gap-2 text-primary hover:underline"
-            >
-              See detailed comparison
-              <ArrowRight className="size-4" />
-            </Link>
-          </div>
         </div>
       </div>
     </section>

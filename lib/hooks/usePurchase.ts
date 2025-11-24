@@ -21,21 +21,15 @@ export function usePurchase(): UsePurchaseReturn {
 
       // Track purchase intent with GA4
       if (typeof window !== 'undefined' && window.gtag) {
-        const prices = {
-          monthly: 5,
-          yearly: 50,
-          lifetime: 149,
-        }
-
         window.gtag('event', 'begin_checkout', {
           currency: 'USD',
-          value: prices[plan],
+          value: 30,
           content_type: 'product',
         })
       }
 
       // Call API to create checkout session
-      const response = await fetch('/api/create-checkout', {
+      const response = await fetch('/api/checkout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -49,9 +43,9 @@ export function usePurchase(): UsePurchaseReturn {
         throw new Error(data.error || 'Failed to create checkout session')
       }
 
-      // Redirect to Dodo checkout
-      if (data.checkoutUrl) {
-        window.location.href = data.checkoutUrl
+      // Redirect to Dodo checkout (adaptor returns checkout_url)
+      if (data.checkout_url) {
+        window.location.href = data.checkout_url
       } else {
         throw new Error('No checkout URL received')
       }
