@@ -5,9 +5,9 @@ import { google } from 'googleapis'
 import { NextRequest, NextResponse } from 'next/server'
 
 interface RouteParams {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
 interface UpdateEventOptions {
@@ -20,17 +20,17 @@ interface UpdateEventOptions {
 }
 
 export async function GET(request: NextRequest, { params }: RouteParams) {
+  const { id: eventId } = await params
   try {
     // Authenticate user using shared utility
     const user = await authenticateUser(request)
-    
+
     // Guard: Ensure user is authenticated
     if (!user) {
       return NextResponse.json({ error: 'Authentication required' }, { status: 401 })
     }
 
     const userId = user.id
-    const eventId = params.id
 
     // Guard: Ensure Google tokens exist
     const tokens = await getGoogleTokens(userId)
@@ -88,17 +88,17 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
 }
 
 export async function PUT(request: NextRequest, { params }: RouteParams) {
+  const { id: eventId } = await params
   try {
     // Authenticate user using shared utility
     const user = await authenticateUser(request)
-    
+
     // Guard: Ensure user is authenticated
     if (!user) {
       return NextResponse.json({ error: 'Authentication required' }, { status: 401 })
     }
 
     const userId = user.id
-    const eventId = params.id
 
     // Get request parameters
     const updateData: UpdateEventOptions = await request.json()
@@ -197,17 +197,17 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
 }
 
 export async function DELETE(request: NextRequest, { params }: RouteParams) {
+  const { id: eventId } = await params
   try {
     // Authenticate user using shared utility
     const user = await authenticateUser(request)
-    
+
     // Guard: Ensure user is authenticated
     if (!user) {
       return NextResponse.json({ error: 'Authentication required' }, { status: 401 })
     }
 
     const userId = user.id
-    const eventId = params.id
 
     // Guard: Ensure Google tokens exist
     const tokens = await getGoogleTokens(userId)
