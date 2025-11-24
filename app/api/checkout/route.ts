@@ -28,8 +28,8 @@ export const POST = async (request: NextRequest) => {
     const productSku = PRODUCT_SKUS[plan as PlanType]
 
     // Build return URL with plan parameter
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
-    const returnUrl = `${appUrl}/success?plan=${plan}`
+    const baseUrl = process.env.DODO_PAYMENTS_RETURN_URL || process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+    const returnUrl = `${baseUrl}/success?plan=${plan}`
 
     console.log('🔍 DEBUG: Return URL being sent to Dodo:', returnUrl)
 
