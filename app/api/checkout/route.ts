@@ -3,9 +3,9 @@ import { NextRequest } from 'next/server'
 
 // Product SKU mapping
 const PRODUCT_SKUS = {
-  monthly: 'berri-monthly',
-  yearly: 'berri-yearly',
-  lifetime: 'berri-lifetime',
+  monthly: 'pdt_C3aZvfWGCTmFhHJcdHg6y',
+  yearly: 'pdt_C3aZvfWGCTmFhHJcdHg6y',
+  lifetime: 'pdt_C3aZvfWGCTmFhHJcdHg6y',
 } as const
 
 type PlanType = keyof typeof PRODUCT_SKUS
@@ -30,6 +30,8 @@ export const POST = async (request: NextRequest) => {
     // Build return URL with plan parameter
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
     const returnUrl = `${appUrl}/success?plan=${plan}`
+
+    console.log('🔍 DEBUG: Return URL being sent to Dodo:', returnUrl)
 
     // Create checkout session using the adaptor
     const checkoutHandler = Checkout({
