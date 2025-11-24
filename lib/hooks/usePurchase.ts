@@ -1,0 +1,70 @@
+"use client"
+
+import { useState } from 'react'
+
+type PlanType = 'monthly' | 'yearly' | 'lifetime'
+
+interface UsePurchaseReturn {
+  initiateCheckout: (plan: PlanType) => Promise<void>
+  loading: boolean
+  error: string | null
+}
+
+export function usePurchase(): UsePurchaseReturn {
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  const initiateCheckout = async (plan: PlanType) => {
+    try {
+      setLoading(true)
+      setError(null)
+
+      // Track purchase intent with GA4
+      if (typeof window !== 'undefined' && window.gtag) {
+        const prices = {
+          monthly: 5,
+          yearly: 50,
+          lifetime: 149,
+        }
+
+        window.gtag('event', 'begin_checkout', {
+          currency: 'USD',
+          value: prices[plan],
+          content_type: 'product',
+        })
+      }
+
+      // Call API to create checkout session
+      const response = await fetch('/api/create-checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ plan }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to create checkout session')
+      }
+
+      // Redirect to Dodo checkout
+      if (data.checkoutUrl) {
+        window.location.href = data.checkoutUrl
+      } else {
+        throw new Error('No checkout URL received')
+      }
+    } catch (err: any) {
+      console.error('Checkout error:', err)
+      setError(err.message || 'Something went wrong. Please try again.')
+      setLoading(false)
+    }
+  }
+
+  return {
+    initiateCheckout,
+    loading,
+    error,
+  }
+}
