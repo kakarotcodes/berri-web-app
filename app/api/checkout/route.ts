@@ -3,9 +3,9 @@ import { NextRequest } from 'next/server'
 
 // Product SKU mapping
 const PRODUCT_SKUS = {
-  monthly: 'pdt_C3aZvfWGCTmFhHJcdHg6y',
-  yearly: 'pdt_C3aZvfWGCTmFhHJcdHg6y',
-  lifetime: 'pdt_C3aZvfWGCTmFhHJcdHg6y',
+  monthly: 'pdt_QOZId0wQ33T9uc4U797o5',
+  yearly: 'pdt_QOZId0wQ33T9uc4U797o5',
+  lifetime: 'pdt_QOZId0wQ33T9uc4U797o5',
 } as const
 
 type PlanType = keyof typeof PRODUCT_SKUS
