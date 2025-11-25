@@ -33,12 +33,11 @@ export const POST = async (request: NextRequest) => {
     // Create checkout session using the adaptor
     const checkoutHandler = Checkout({
       bearerToken: process.env.DODO_PAYMENTS_API_KEY!,
-      returnUrl: returnUrl,
       environment: process.env.DODO_PAYMENTS_ENVIRONMENT as 'test_mode' | 'live_mode',
       type: 'session',
     })
 
-    // Call the handler with a modified request that includes the product cart
+    // Call the handler with a modified request that includes the product cart AND return_url in the body
     const modifiedRequest = new Request(request.url, {
       method: 'POST',
       headers: request.headers,
@@ -49,6 +48,7 @@ export const POST = async (request: NextRequest) => {
             quantity: 1,
           },
         ],
+        return_url: returnUrl,
         metadata: {
           source: 'web_app',
           plan_type: plan,
