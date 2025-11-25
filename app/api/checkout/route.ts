@@ -27,13 +27,13 @@ export const POST = async (request: NextRequest) => {
     // Get product SKU
     const productSku = PRODUCT_SKUS[plan as PlanType]
 
-    // Build return URL
-    const returnUrl = process.env.DODO_PAYMENTS_RETURN_URL || 'http://localhost:3000/success'
+    // Build return URL - HARDCODED FOR TESTING
+    const returnUrl = 'https://berri-web-staging.vercel.app/success'
 
     // Create checkout session using the adaptor
     const checkoutHandler = Checkout({
       bearerToken: process.env.DODO_PAYMENTS_API_KEY!,
-      returnUrl,
+      returnUrl: returnUrl,
       environment: process.env.DODO_PAYMENTS_ENVIRONMENT as 'test_mode' | 'live_mode',
       type: 'session',
     })
