@@ -5,14 +5,14 @@ import { GuideNavigation } from '@/components/guide/guide-navigation'
 import { GuideBreadcrumb } from '@/components/guide/guide-breadcrumb'
 
 interface GuidePageProps {
-  params: {
+  params: Promise<{
     category: string
     slug: string
-  }
+  }>
 }
 
-export default function GuidePage({ params }: GuidePageProps) {
-  const { category, slug } = params
+export default async function GuidePage({ params }: GuidePageProps) {
+  const { category, slug } = await params
   const page = getPageBySlug(category, slug)
   const navigation = getNavigationForPage(category, slug)
 
@@ -60,7 +60,7 @@ export async function generateStaticParams() {
 
 // Generate metadata for each page
 export async function generateMetadata({ params }: GuidePageProps) {
-  const { category, slug } = params
+  const { category, slug } = await params
   const page = getPageBySlug(category, slug)
 
   if (!page) {
