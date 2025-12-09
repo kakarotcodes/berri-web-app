@@ -116,7 +116,7 @@ export function HeroSection() {
                     className="rounded-full"
                   >
                     <a
-                      href="#pricing"
+                      href="#plans"
                       className="flex items-center gap-2"
                     >
                       <svg
@@ -393,7 +393,7 @@ const HeroHeader = () => {
                   size="sm"
                   className={cn(isScrolled && "lg:hidden")}
                 >
-                  <a href="#pricing">
+                  <a href="#plans">
                     <span>Download for macOS</span>
                   </a>
                 </Button>
@@ -402,7 +402,7 @@ const HeroHeader = () => {
                   size="sm"
                   className={cn(isScrolled ? "lg:inline-flex" : "hidden")}
                 >
-                  <a href="#pricing">
+                  <a href="#plans">
                     <span>Download for macOS</span>
                   </a>
                 </Button>
