@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "docs:check": "node scripts/check-docs.js"
   },
   "dependencies": {
     "@dodopayments/nextjs": "^0.3.1",
