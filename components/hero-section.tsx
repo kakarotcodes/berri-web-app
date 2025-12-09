@@ -116,12 +116,8 @@ export function HeroSection() {
                     className="rounded-full"
                   >
                     <a
-                      href="https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.2.0.dmg"
-                      download
+                      href="#pricing"
                       className="flex items-center gap-2"
-                      onClick={(e) =>
-                        handleDownload(e, "https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.2.0.dmg", "hero_main")
-                      }
                     >
                       <svg
                         className="size-5"
@@ -397,33 +393,16 @@ const HeroHeader = () => {
                   size="sm"
                   className={cn(isScrolled && "lg:hidden")}
                 >
-                  <a
-                    href="https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.2.0.dmg"
-                    download
-                    onClick={(e) => handleDownload(e, 'https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.2.0.dmg', 'mobile_menu')}
-                  >
+                  <a href="#pricing">
                     <span>Download for macOS</span>
                   </a>
                 </Button>
-                {/* <Button
-                      asChild
-                      size="sm"
-                      className={cn(isScrolled && "lg:hidden")}
-                    >
-                      <Link href="/login">
-                        <span>Download for macOS</span>
-                      </Link>
-                    </Button> */}
                 <Button
                   asChild
                   size="sm"
                   className={cn(isScrolled ? "lg:inline-flex" : "hidden")}
                 >
-                  <a
-                    href="https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.2.0.dmg"
-                    download
-                    onClick={(e) => handleDownload(e, 'https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.2.0.dmg', 'scrolled_header')}
-                  >
+                  <a href="#pricing">
                     <span>Download for macOS</span>
                   </a>
                 </Button>
