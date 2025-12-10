@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "docs:check": "node scripts/check-docs.js"
   },
   "dependencies": {
     "@dodopayments/nextjs": "^0.3.1",
@@ -20,7 +21,7 @@
     "googleapis": "^150.0.1",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.554.0",
-    "next": "^16.0.4",
+    "next": "^16.0.7",
     "next-themes": "^0.4.6",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
@@ -34,8 +35,9 @@
     "@types/react-dom": "^19.2.3",
     "autoprefixer": "^10.0.1",
     "eslint": "^9.39.1",
-    "eslint-config-next": "^16.0.4",
+    "eslint-config-next": "^16.0.7",
     "postcss": "^8",
+    "raw-loader": "^4.0.2",
     "tailwindcss": "^3.3.0",
     "typescript": "^5"
   }

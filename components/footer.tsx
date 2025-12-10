@@ -137,6 +137,26 @@ export function Footer() {
           </div> */}
         </div>
 
+        {/* Bottom bar with legal links */}
+        <div className="mt-12 border-t pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p className="text-sm text-muted-foreground">
+            © {new Date().getFullYear()} Berri. All rights reserved.
+          </p>
+          <div className="flex gap-6">
+            <Link
+              href="/privacy"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Privacy Policy
+            </Link>
+            <Link
+              href="/terms"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Terms of Service
+            </Link>
+          </div>
+        </div>
       </div>
     </footer>
   );

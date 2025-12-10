@@ -61,7 +61,7 @@ export function PricingSection() {
   }
 
   return (
-    <section id="pricing" className="py-16 md:py-32">
+    <section id="plans" className="py-16 md:py-32 scroll-mt-20">
       <div className="mx-auto max-w-6xl px-6">
         {/* Header */}
         <div className="mb-16 text-center">
