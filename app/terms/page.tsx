@@ -1,7 +1,6 @@
 import { Metadata } from 'next'
-import fs from 'fs'
-import path from 'path'
 import { LegalContent } from '@/components/legal-content'
+import content from '@/TERMS_AND_CONDITIONS.md'
 
 export const metadata: Metadata = {
   title: 'Terms and Conditions - Berri',
@@ -9,9 +8,6 @@ export const metadata: Metadata = {
 }
 
 export default function TermsPage() {
-  const filePath = path.join(process.cwd(), 'TERMS_AND_CONDITIONS.md')
-  const content = fs.readFileSync(filePath, 'utf-8')
-
   return (
     <div className="min-h-screen bg-background">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
