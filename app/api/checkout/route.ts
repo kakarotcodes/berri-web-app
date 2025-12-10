@@ -1,11 +1,13 @@
 import { Checkout } from '@dodopayments/nextjs'
 import { NextRequest } from 'next/server'
 
-// Product SKU mapping
+// Product SKU from environment variable
+const LIFETIME_PRODUCT_SKU = process.env.DODO_LIFETIME_PRODUCT_SKU!
+
 const PRODUCT_SKUS = {
-  monthly: 'pdt_QOZId0wQ33T9uc4U797o5',
-  yearly: 'pdt_QOZId0wQ33T9uc4U797o5',
-  lifetime: 'pdt_QOZId0wQ33T9uc4U797o5',
+  monthly: LIFETIME_PRODUCT_SKU,
+  yearly: LIFETIME_PRODUCT_SKU,
+  lifetime: LIFETIME_PRODUCT_SKU,
 } as const
 
 type PlanType = keyof typeof PRODUCT_SKUS
