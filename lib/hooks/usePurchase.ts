@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 type PlanType = 'monthly' | 'yearly' | 'lifetime'
 
@@ -13,6 +13,18 @@ interface UsePurchaseReturn {
 export function usePurchase(): UsePurchaseReturn {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+  // Reset loading state when page is restored from bfcache (back/forward navigation)
+  useEffect(() => {
+    const handlePageShow = (event: PageTransitionEvent) => {
+      if (event.persisted) {
+        setLoading(false)
+      }
+    }
+
+    window.addEventListener('pageshow', handlePageShow)
+    return () => window.removeEventListener('pageshow', handlePageShow)
+  }, [])
 
   const initiateCheckout = async (plan: PlanType) => {
     try {
