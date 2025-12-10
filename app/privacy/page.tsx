@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 import { LegalContent } from '@/components/legal-content'
-import content from '@/PRIVACY_POLICY.md'
+import content from '../../PRIVACY_POLICY.md'
 
 export const metadata: Metadata = {
   title: 'Privacy Policy - Berri',

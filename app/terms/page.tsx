@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 import { LegalContent } from '@/components/legal-content'
-import content from '@/TERMS_AND_CONDITIONS.md'
+import content from '../../TERMS_AND_CONDITIONS.md'
 
 export const metadata: Metadata = {
   title: 'Terms and Conditions - Berri',
