@@ -1,5 +1,6 @@
 "use client"
 
+import { useState, useEffect } from 'react'
 import { PricingCard } from '@/components/pricing/pricing-card'
 import { usePurchase } from '@/lib/hooks/usePurchase'
 import { trackDownload } from '@/lib/analytics/ga4'
@@ -44,11 +45,25 @@ const pricingPlans = [
 ]
 
 export function PricingSection() {
-  const { initiateCheckout, loading, error } = usePurchase()
+  const { initiateCheckout, loadingPlan, error } = usePurchase()
+  const [downloadingFree, setDownloadingFree] = useState(false)
+
+  // Reset free download loading state when page is restored from bfcache
+  useEffect(() => {
+    const handlePageShow = (event: PageTransitionEvent) => {
+      if (event.persisted) {
+        setDownloadingFree(false)
+      }
+    }
+
+    window.addEventListener('pageshow', handlePageShow)
+    return () => window.removeEventListener('pageshow', handlePageShow)
+  }, [])
 
   const handleCtaClick = (planId: string) => {
     if (planId === 'free') {
       // Handle free download
+      setDownloadingFree(true)
       const downloadUrl = 'https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.2.0.dmg'
       trackDownload('pricing_section', downloadUrl, '1.2.0')
       setTimeout(() => {
@@ -58,6 +73,13 @@ export function PricingSection() {
       // Handle paid checkout
       initiateCheckout('lifetime')
     }
+  }
+
+  // Determine loading state for each plan
+  const isLoading = (planId: string) => {
+    if (planId === 'free') return downloadingFree
+    if (planId === 'lifetime') return loadingPlan === 'lifetime'
+    return false
   }
 
   return (
@@ -94,7 +116,7 @@ export function PricingSection() {
               cta={plan.cta}
               ctaVariant={plan.ctaVariant}
               onCtaClick={() => handleCtaClick(plan.id)}
-              loading={loading}
+              loading={isLoading(plan.id)}
               popular={plan.popular}
               badge={plan.badge}
               highlight={plan.highlight}

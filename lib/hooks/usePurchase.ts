@@ -6,19 +6,19 @@ type PlanType = 'monthly' | 'yearly' | 'lifetime'
 
 interface UsePurchaseReturn {
   initiateCheckout: (plan: PlanType) => Promise<void>
-  loading: boolean
+  loadingPlan: PlanType | null
   error: string | null
 }
 
 export function usePurchase(): UsePurchaseReturn {
-  const [loading, setLoading] = useState(false)
+  const [loadingPlan, setLoadingPlan] = useState<PlanType | null>(null)
   const [error, setError] = useState<string | null>(null)
 
   // Reset loading state when page is restored from bfcache (back/forward navigation)
   useEffect(() => {
     const handlePageShow = (event: PageTransitionEvent) => {
       if (event.persisted) {
-        setLoading(false)
+        setLoadingPlan(null)
       }
     }
 
@@ -28,7 +28,7 @@ export function usePurchase(): UsePurchaseReturn {
 
   const initiateCheckout = async (plan: PlanType) => {
     try {
-      setLoading(true)
+      setLoadingPlan(plan)
       setError(null)
 
       // Track purchase intent with GA4
@@ -64,13 +64,13 @@ export function usePurchase(): UsePurchaseReturn {
     } catch (err: any) {
       console.error('Checkout error:', err)
       setError(err.message || 'Something went wrong. Please try again.')
-      setLoading(false)
+      setLoadingPlan(null)
     }
   }
 
   return {
     initiateCheckout,
-    loading,
+    loadingPlan,
     error,
   }
 }
