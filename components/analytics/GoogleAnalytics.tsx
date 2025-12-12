@@ -1,28 +1,27 @@
 /**
  * Google Analytics 4 Script Component
  * Client Component that injects GA4 tracking scripts
- * Only renders in production environment
+ * Only renders when GA_MEASUREMENT_ID env var is set
  */
 
 'use client'
 
 import Script from 'next/script'
 
-const GA_MEASUREMENT_ID = 'G-5ML1HHN4NZ'
+const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
 
 /**
  * GoogleAnalytics Component
  * Injects GA4 gtag.js script using Next.js Script component for optimal loading
  *
  * Features:
- * - Only loads in production
+ * - Only loads when NEXT_PUBLIC_GA_MEASUREMENT_ID is set
  * - Uses afterInteractive strategy for performance
  * - Type-safe implementation
- * - Follows Next.js 14 best practices
  */
 export default function GoogleAnalytics() {
-  // Only render in production
-  if (process.env.NODE_ENV !== 'production') {
+  // Only render if GA measurement ID is configured
+  if (!GA_MEASUREMENT_ID) {
     return null
   }
 
