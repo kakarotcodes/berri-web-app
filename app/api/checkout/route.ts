@@ -30,7 +30,7 @@ export const POST = async (request: NextRequest) => {
     const productSku = PRODUCT_SKUS[plan as PlanType]
 
     // Build return URL - HARDCODED FOR TESTING
-    const returnUrl = 'https://berri-web-staging.vercel.app/success'
+    const returnUrl =  process.env.DODO_PAYMENTS_RETURN_URL //'https://berri-web-staging.vercel.app/success'
 
     // Create checkout session using the adaptor
     const checkoutHandler = Checkout({
