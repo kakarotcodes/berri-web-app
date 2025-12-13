@@ -21,7 +21,7 @@ export default function GuideLayout({
         <div className="flex items-center justify-between px-4 lg:px-6 h-16">
           <Link href="/" className="flex items-center gap-2">
             <img
-              src="/assets/logos/logo1_top_left.svg"
+              src="/assets/logos/berri-logo.png"
               alt="Berri Logo"
               className="size-8 rounded-lg"
             />
