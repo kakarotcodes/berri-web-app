@@ -47,7 +47,7 @@ export function Footer() {
           <div className="lg:col-span-2">
             <div className="mb-4 flex items-center space-x-3">
               <img
-                src="/assets/logos/logo1_top_left.svg"
+                src="/assets/logos/berri-logo.png"
                 alt="Berri Logo"
                 className="size-8 rounded-lg"
               />

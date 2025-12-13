@@ -499,7 +499,7 @@ const BerriLogo = ({ className }: { className?: string }) => {
   return (
     <div className={cn("flex items-center space-x-3", className)}>
       <img
-        src="/assets/logos/logo1_top_left.svg"
+        src="/assets/logos/berri-logo.png"
         alt="Berri Logo"
         className="size-8 rounded-lg"
       />
