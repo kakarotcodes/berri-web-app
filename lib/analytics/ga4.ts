@@ -40,20 +40,18 @@ export const sendGA4Event = (
 ): void => {
   // Only track in production
   if (!isProduction()) {
-    console.log('[GA4 Dev Mode]', eventName, params)
     return
   }
 
   // Check if GA4 is loaded
   if (!isGA4Available()) {
-    console.warn('[GA4] gtag not available')
     return
   }
 
   try {
     window.gtag!('event', eventName, params)
-  } catch (error) {
-    console.error('[GA4] Event tracking error:', error)
+  } catch {
+    // Silently fail for analytics errors
   }
 }
 
@@ -142,3 +140,54 @@ export const trackThemeToggle = (theme: 'light' | 'dark'): void => {
     event_label: theme,
   })
 }
+
+/**
+ * Track guide feedback events
+ * Tracks whether users found documentation pages helpful
+ *
+ * @param pageSlug - Page slug identifier
+ * @param helpful - Whether user found page helpful
+ */
+export const trackGuideFeedback = (pageSlug: string, helpful: boolean): void => {
+  sendGA4Event('guide_feedback', {
+    page_slug: pageSlug,
+    helpful: helpful,
+    event_category: 'guide',
+    event_label: `${pageSlug}_${helpful ? 'helpful' : 'not_helpful'}`,
+  })
+}
+
+/**
+ * Track guide search events
+ * Tracks user searches within documentation
+ *
+ * @param query - Search query string
+ * @param resultCount - Number of results returned
+ */
+export const trackGuideSearch = (query: string, resultCount: number): void => {
+  sendGA4Event('guide_search', {
+    search_term: query,
+    result_count: resultCount,
+    event_category: 'guide',
+    event_label: query,
+  })
+}
+
+/**
+ * Track guide search result clicks
+ * Tracks which search results users click on
+ *
+ * @param query - Original search query
+ * @param pageSlug - Page slug that was clicked
+ */
+export const trackGuideSearchClick = (query: string, pageSlug: string): void => {
+  sendGA4Event('guide_search_click', {
+    search_term: query,
+    page_slug: pageSlug,
+    event_category: 'guide',
+    event_label: `${query}_to_${pageSlug}`,
+  })
+}
+
+// Alias for backward compatibility
+export const sendGAEvent = sendGA4Event

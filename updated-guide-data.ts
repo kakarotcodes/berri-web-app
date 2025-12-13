@@ -1,49 +1,49 @@
 export interface GuideSection {
-  id: string;
-  title: string;
-  description: string;
-  icon: string;
-  pages: GuidePage[];
+  id: string
+  title: string
+  description: string
+  icon: string
+  pages: GuidePage[]
 }
 
 export interface GuidePage {
-  id: string;
-  slug: string;
-  title: string;
-  description: string;
-  content: string;
-  readingTime: number;
-  category: string;
+  id: string
+  slug: string
+  title: string
+  description: string
+  content: string
+  readingTime: number
+  category: string
 }
 
 export interface GuideNavigation {
-  current: GuidePage;
-  previous?: GuidePage;
-  next?: GuidePage;
-  section: GuideSection;
+  current: GuidePage
+  previous?: GuidePage
+  next?: GuidePage
+  section: GuideSection
 }
 
 // Guide version metadata
 export const GUIDE_METADATA = {
-  version: "2.0.0",
-  lastUpdated: "2025-12-01",
-  appVersion: "Berri v1.0.7",
-};
+  version: '2.0.0',
+  lastUpdated: '2025-12-01',
+  appVersion: 'Berri v1.0.7'
+}
 
 // Transform USER_GUIDES.md content into structured data
 export const guideSections: GuideSection[] = [
   {
-    id: "getting-started",
-    title: "Getting Started",
-    description: "Install Berri and learn the basics",
-    icon: "Rocket",
+    id: 'getting-started',
+    title: 'Getting Started',
+    description: 'Install Berri and learn the basics',
+    icon: 'Rocket',
     pages: [
       {
-        id: "what-is-powerstrip",
-        slug: "what-is-powerstrip",
-        title: "What is the PowerStrip?",
-        description: "Understanding the core concept behind Berri",
-        category: "getting-started",
+        id: 'what-is-powerstrip',
+        slug: 'what-is-powerstrip',
+        title: 'What is the PowerStrip?',
+        description: 'Understanding the core concept behind Berri',
+        category: 'getting-started',
         readingTime: 2,
         content: `# What is the PowerStrip?
 
@@ -92,15 +92,14 @@ Add any website to your PowerStrip and access it with a single click or keyboard
 
 Traditional productivity tools force you to switch windows constantly. The PowerStrip eliminates that friction - your most-used tools and websites are always one click away, without interrupting your focus.
 
-**Next Step**: Let's get Berri installed on your system.`,
+**Next Step**: Let's get Berri installed on your system.`
       },
       {
-        id: "installation",
-        slug: "installation",
-        title: "Installation & Setup",
-        description:
-          "How to download, install, and launch Berri for the first time",
-        category: "getting-started",
+        id: 'installation',
+        slug: 'installation',
+        title: 'Installation & Setup',
+        description: 'How to download, install, and launch Berri for the first time',
+        category: 'getting-started',
         readingTime: 3,
         content: `# Installation & Setup
 
@@ -123,14 +122,14 @@ Traditional productivity tools force you to switch windows constantly. The Power
 **What is the PowerStrip?**
 The PowerStrip is Berri's floating toolbar that gives you quick access to your favorite features and websites. Think of it as a customizable command center that stays visible above all your apps - always there when you need it, small enough to stay out of your way.
 
-Your Berri journey begins here! The installation process is simple and secure.`,
+Your Berri journey begins here! The installation process is simple and secure.`
       },
       {
-        id: "onboarding",
-        slug: "onboarding",
-        title: "Onboarding Flow",
-        description: "Customize Berri during your first setup",
-        category: "getting-started",
+        id: 'onboarding',
+        slug: 'onboarding',
+        title: 'Onboarding Flow',
+        description: 'Customize Berri during your first setup',
+        category: 'getting-started',
         readingTime: 5,
         content: `# Onboarding Flow
 
@@ -189,15 +188,14 @@ Don't stress about your choices:
 - Add new websites or remove unused ones
 - Adjust keyboard shortcuts
 
-The onboarding just gives you a head start!`,
+The onboarding just gives you a head start!`
       },
       {
-        id: "first-launch",
-        slug: "first-launch",
-        title: "First Launch Experience",
-        description:
-          "What happens when you start using Berri for the first time",
-        category: "getting-started",
+        id: 'first-launch',
+        slug: 'first-launch',
+        title: 'First Launch Experience',
+        description: 'What happens when you start using Berri for the first time',
+        category: 'getting-started',
         readingTime: 4,
         content: `# First Launch Experience
 
@@ -231,15 +229,14 @@ If you click through onboarding without making changes:
 - **YouTube** - Pre-selected for quick access
 - **No other modules selected** - You'll add these in Settings later
 
-This minimal setup lets you start quickly and customize as you explore Berri.`,
+This minimal setup lets you start quickly and customize as you explore Berri.`
       },
       {
-        id: "interface-overview",
-        slug: "interface-overview",
-        title: "Interface Overview",
-        description:
-          "Understanding Berri's three interface modes and basic concepts",
-        category: "getting-started",
+        id: 'interface-overview',
+        slug: 'interface-overview',
+        title: 'Interface Overview',
+        description: "Understanding Berri's three interface modes and basic concepts",
+        category: 'getting-started',
         readingTime: 5,
         content: `# Interface Overview
 
@@ -273,22 +270,22 @@ Berri has three distinct interface modes, each designed for different use cases:
 - **Features**: Access to Notes, Clipboard, Files, Browse, Website Quick Access, and Settings
 - **Customization**: Show/hide modules and reorder them in Settings > PowerStrip Customization
 
-Each mode is optimized for different workflows and usage patterns.`,
-      },
-    ],
+Each mode is optimized for different workflows and usage patterns.`
+      }
+    ]
   },
   {
-    id: "interface-navigation",
-    title: "Interface & Navigation",
+    id: 'interface-navigation',
+    title: 'Interface & Navigation',
     description: "Master Berri's movement, positioning, and shortcuts",
-    icon: "Navigation",
+    icon: 'Navigation',
     pages: [
       {
-        id: "interface-modes",
-        slug: "interface-modes",
-        title: "Interface Modes",
-        description: "Deep dive into Default, PowerStrip, and Hover views",
-        category: "interface-navigation",
+        id: 'interface-modes',
+        slug: 'interface-modes',
+        title: 'Interface Modes',
+        description: 'Deep dive into Default, PowerStrip, and Hover views',
+        category: 'interface-navigation',
         readingTime: 4,
         content: `# Interface Modes
 
@@ -310,14 +307,14 @@ Each mode is optimized for different workflows and usage patterns.`,
 - **Position Memory**: Maintains separate positions for different modes
 - **Size Persistence**: Remembers custom sizes for Hover view
 
-The interface modes work together to provide the right level of access at the right time.`,
+The interface modes work together to provide the right level of access at the right time.`
       },
       {
-        id: "positioning",
-        slug: "positioning",
-        title: "Movement & Positioning",
-        description: "How to position Berri perfectly on your screen",
-        category: "interface-navigation",
+        id: 'positioning',
+        slug: 'positioning',
+        title: 'Movement & Positioning',
+        description: 'How to position Berri perfectly on your screen',
+        category: 'interface-navigation',
         readingTime: 3,
         content: `# Movement & Positioning Capabilities
 
@@ -345,14 +342,14 @@ The interface modes work together to provide the right level of access at the ri
 ## Always-on-Top Behavior
 - **Never Hidden**: Berri stays visible above all applications
 - **Work Alongside**: Use other apps normally while Berri remains accessible
-- **Incognito Mode Available**: Hide from screen recordings when needed (in Settings, Lifetime plan only)`,
+- **Incognito Mode Available**: Hide from screen recordings when needed (in Settings, Lifetime plan only)`
       },
       {
-        id: "mode-switching",
-        slug: "mode-switching",
-        title: "Mode Switching",
-        description: "Learn how to efficiently switch between interface modes",
-        category: "interface-navigation",
+        id: 'mode-switching',
+        slug: 'mode-switching',
+        title: 'Mode Switching',
+        description: 'Learn how to efficiently switch between interface modes',
+        category: 'interface-navigation',
         readingTime: 2,
         content: `# Mode Switching
 
@@ -378,15 +375,14 @@ The interface modes work together to provide the right level of access at the ri
 - **Learn Your Module Shortcuts**: Check your specific Control+# assignments in Settings
 - **Use Hover Behavior**: Quick preview without full expansion
 - **Customize Auto-Collapse**: Set timing that matches your workflow
-- **Reorder Modules**: Put frequently-used modules first for easier shortcuts (Control+1 is easier to reach than Control+7)`,
+- **Reorder Modules**: Put frequently-used modules first for easier shortcuts (Control+1 is easier to reach than Control+7)`
       },
       {
-        id: "shortcuts",
-        slug: "shortcuts",
-        title: "Keyboard Shortcuts",
-        description:
-          "Master all global keyboard shortcuts for maximum efficiency",
-        category: "interface-navigation",
+        id: 'shortcuts',
+        slug: 'shortcuts',
+        title: 'Keyboard Shortcuts',
+        description: 'Master all global keyboard shortcuts for maximum efficiency',
+        category: 'interface-navigation',
         readingTime: 6,
         content: `# Keyboard Shortcuts
 **Master Berri's global shortcuts for instant access**
@@ -555,14 +551,14 @@ Once enabled, they follow the same order-based rule (or you can assign custom sh
 - "My first module is Notes, so Control+1 opens Notes"
 - "I can change this anytime by reordering"
 
-This gives you complete control over your workflow!`,
+This gives you complete control over your workflow!`
       },
       {
-        id: "pill-customization",
-        slug: "pill-customization",
-        title: "Customizing Your PowerStrip",
-        description: "Personalize module order, visibility, and shortcuts",
-        category: "interface-navigation",
+        id: 'pill-customization',
+        slug: 'pill-customization',
+        title: 'Customizing Your PowerStrip',
+        description: 'Personalize module order, visibility, and shortcuts',
+        category: 'interface-navigation',
         readingTime: 8,
         content: `# Customizing Your PowerStrip
 **Make Berri work exactly how you want**
@@ -936,23 +932,22 @@ Every 3 months:
 ## Related Features
 - [Keyboard Shortcuts](/guide/interface-navigation/shortcuts) - Understanding dynamic shortcuts
 - [Website Quick Access](/guide/feature-modules/website-quick-access) - Add custom sites
-- [Interface Modes](/guide/interface-navigation/interface-modes) - PowerStrip, Default, Hover views`,
-      },
-    ],
+- [Interface Modes](/guide/interface-navigation/interface-modes) - PowerStrip, Default, Hover views`
+      }
+    ]
   },
   {
-    id: "permissions-setup",
-    title: "Permissions Setup",
-    description: "Understanding and configuring system permissions",
-    icon: "Shield",
+    id: 'permissions-setup',
+    title: 'Permissions Setup',
+    description: 'Understanding and configuring system permissions',
+    icon: 'Shield',
     pages: [
       {
-        id: "permissions-overview",
-        slug: "permissions-overview",
-        title: "Permissions Overview",
-        description:
-          "Why Berri needs system permissions and what each one does",
-        category: "permissions-setup",
+        id: 'permissions-overview',
+        slug: 'permissions-overview',
+        title: 'Permissions Overview',
+        description: 'Why Berri needs system permissions and what each one does',
+        category: 'permissions-setup',
         readingTime: 3,
         content: `# Permissions Overview
 
@@ -983,14 +978,14 @@ Berri's advanced features require deep system integration to provide:
 - Permissions can be revoked at any time through System Settings
 
 ## Grant During Setup
-Berri will guide you through granting necessary permissions during the initial setup process. This ensures all features work correctly from the start.`,
+Berri will guide you through granting necessary permissions during the initial setup process. This ensures all features work correctly from the start.`
       },
       {
-        id: "screen-recording",
-        slug: "screen-recording",
-        title: "Screen Recording Permission",
-        description: "Enable screenshot features and screen capture",
-        category: "permissions-setup",
+        id: 'screen-recording',
+        slug: 'screen-recording',
+        title: 'Screen Recording Permission',
+        description: 'Enable screenshot features and screen capture',
+        category: 'permissions-setup',
         readingTime: 2,
         content: `# Screen Recording Permission
 
@@ -1023,14 +1018,14 @@ Allows Berri to take screenshots and capture screen content
 ## Troubleshooting
 - If screenshots aren't working, verify this permission is enabled
 - Look for Berri in the Screen Recording section of Privacy settings
-- Try restarting Berri after enabling the permission`,
+- Try restarting Berri after enabling the permission`
       },
       {
-        id: "accessibility",
-        slug: "accessibility",
-        title: "Accessibility Permission",
-        description: "Enable global shortcuts and system integration",
-        category: "permissions-setup",
+        id: 'accessibility',
+        slug: 'accessibility',
+        title: 'Accessibility Permission',
+        description: 'Enable global shortcuts and system integration',
+        category: 'permissions-setup',
         readingTime: 2,
         content: `# Accessibility Permission
 
@@ -1062,14 +1057,14 @@ Allows Berri to monitor system events and use global shortcuts
 ## Troubleshooting
 - If global shortcuts aren't working, check this permission
 - Ensure Berri is listed and enabled in Accessibility settings
-- This permission is essential for core Berri functionality`,
+- This permission is essential for core Berri functionality`
       },
       {
-        id: "file-access",
-        slug: "file-access",
-        title: "File System Access",
-        description: "Enable file browsing and management features",
-        category: "permissions-setup",
+        id: 'file-access',
+        slug: 'file-access',
+        title: 'File System Access',
+        description: 'Enable file browsing and management features',
+        category: 'permissions-setup',
         readingTime: 2,
         content: `# File System Access
 
@@ -1107,22 +1102,22 @@ Access to Desktop and Downloads folders
 ## Troubleshooting
 - If file features aren't working, verify this permission
 - Check that Berri is enabled in Full Disk Access
-- Some file operations may require restarting the app`,
-      },
-    ],
+- Some file operations may require restarting the app`
+      }
+    ]
   },
   {
-    id: "feature-modules",
-    title: "Feature Modules",
+    id: 'feature-modules',
+    title: 'Feature Modules',
     description: "Deep dive into each of Berri's productivity modules",
-    icon: "Grid3X3",
+    icon: 'Grid3X3',
     pages: [
       {
-        id: "notes",
-        slug: "notes",
-        title: "Notes Module",
-        description: "Your digital notepad with rich text editing capabilities",
-        category: "feature-modules",
+        id: 'notes',
+        slug: 'notes',
+        title: 'Notes Module',
+        description: 'Your digital notepad with rich text editing capabilities',
+        category: 'feature-modules',
         readingTime: 5,
         content: `# Notes Module
 **Your digital notepad with rich text editing capabilities**
@@ -1174,15 +1169,14 @@ Access to Desktop and Downloads folders
 ## Pro Tips
 - Use consistent tagging for better organization
 - Take advantage of the search feature for quick retrieval
-- Export important notes as backups`,
+- Export important notes as backups`
       },
       {
-        id: "clipboard",
-        slug: "clipboard",
-        title: "Clipboard Module",
-        description:
-          "Never lose copied content with intelligent clipboard history",
-        category: "feature-modules",
+        id: 'clipboard',
+        slug: 'clipboard',
+        title: 'Clipboard Module',
+        description: 'Never lose copied content with intelligent clipboard history',
+        category: 'feature-modules',
         readingTime: 4,
         content: `# Clipboard Module
 **Never lose copied content again with intelligent clipboard history**
@@ -1235,14 +1229,14 @@ Access to Desktop and Downloads folders
 - Never lose important copied content
 - Quick access to frequently used text
 - Perfect for repetitive tasks
-- Seamless integration with any application`,
+- Seamless integration with any application`
       },
       {
-        id: "files",
-        slug: "files",
-        title: "Files Module",
-        description: "Quick file browsing and management",
-        category: "feature-modules",
+        id: 'files',
+        slug: 'files',
+        title: 'Files Module',
+        description: 'Quick file browsing and management',
+        category: 'feature-modules',
         readingTime: 3,
         content: `# Files Module
 **Quick file browsing and management**
@@ -1292,14 +1286,14 @@ Access to Desktop and Downloads folders
 - Quick access to recent downloads
 - Desktop cleanup and organization
 - File management without opening Finder
-- Integration with other Berri modules`,
+- Integration with other Berri modules`
       },
       {
-        id: "webview",
-        slug: "webview",
-        title: "Browse Module",
-        description: "Web browsing with popular sites grid on new tab",
-        category: "feature-modules",
+        id: 'webview',
+        slug: 'webview',
+        title: 'Browse Module',
+        description: 'Web browsing with popular sites grid on new tab',
+        category: 'feature-modules',
         readingTime: 4,
         content: `# Browse Module
 **Web browsing with quick access to popular sites**
@@ -1387,14 +1381,14 @@ When you open a new tab in Browse, you'll see a grid of popular websites:
 ## Best Practices
 - Use Browse for general browsing and popular sites
 - Add frequently-visited sites to Website Quick Access (Settings → Quick Websites)
-- Sessions stay logged in for convenience`,
+- Sessions stay logged in for convenience`
       },
       {
-        id: "website-quick-access",
-        slug: "website-quick-access",
-        title: "Website Quick Access",
-        description: "Add custom websites with dedicated shortcuts",
-        category: "feature-modules",
+        id: 'website-quick-access',
+        slug: 'website-quick-access',
+        title: 'Website Quick Access',
+        description: 'Add custom websites with dedicated shortcuts',
+        category: 'feature-modules',
         readingTime: 6,
         content: `# Website Quick Access
 **Add your favorite websites for instant access with custom shortcuts**
@@ -1576,14 +1570,14 @@ Berri includes YouTube by default:
 ## Related Features
 - [Browse Module](/guide/feature-modules/webview) - General web browsing with popular sites
 - [Keyboard Shortcuts](/guide/interface-navigation/shortcuts) - Understanding shortcuts
-- [PowerStrip Customization](/guide/interface-navigation/pill-customization) - Organize your PowerStrip`,
+- [PowerStrip Customization](/guide/interface-navigation/pill-customization) - Organize your PowerStrip`
       },
       {
-        id: "settings",
-        slug: "settings",
-        title: "Settings Module",
-        description: "Customize Berri to work exactly how you want",
-        category: "feature-modules",
+        id: 'settings',
+        slug: 'settings',
+        title: 'Settings Module',
+        description: 'Customize Berri to work exactly how you want',
+        category: 'feature-modules',
         readingTime: 4,
         content: `# Settings Module
 **Customize Berri to work exactly how you want**
@@ -1677,14 +1671,14 @@ Settings is unique among modules:
 - Use PowerStrip Customization to personalize your workflow
 - Start with module reordering to optimize your shortcuts
 - Hide unused modules to keep your PowerStrip clean and shortcuts predictable
-- Check Keyboard Shortcuts page to see current assignments`,
+- Check Keyboard Shortcuts page to see current assignments`
       },
       {
-        id: "snipping-tool",
-        slug: "snipping-tool",
-        title: "Snipping Tool",
-        description: "Quick screenshot capture with automatic Berri hiding",
-        category: "feature-modules",
+        id: 'snipping-tool',
+        slug: 'snipping-tool',
+        title: 'Snipping Tool',
+        description: 'Quick screenshot capture with automatic Berri hiding',
+        category: 'feature-modules',
         readingTime: 5,
         content: `# Snipping Tool
 **Quick screenshot capture with automatic Berri hiding**
@@ -1851,14 +1845,14 @@ Screenshots are auto-named:
 ## Related Features
 - [Screen Capture Module](/guide/feature-modules/screen-capture) - Advanced capture toolbar
 - [Keyboard Shortcuts](/guide/interface-navigation/shortcuts) - Assign shortcuts
-- [Permissions Setup](/guide/permissions-setup/screen-recording) - Grant permissions`,
+- [Permissions Setup](/guide/permissions-setup/screen-recording) - Grant permissions`
       },
       {
-        id: "google-meet",
-        slug: "google-meet",
-        title: "Google Meet Integration",
-        description: "Quick access to start or join Google Meet calls",
-        category: "feature-modules",
+        id: 'google-meet',
+        slug: 'google-meet',
+        title: 'Google Meet Integration',
+        description: 'Quick access to start or join Google Meet calls',
+        category: 'feature-modules',
         readingTime: 4,
         content: `# Google Meet Integration
 **Instant access to Google Meet video calls**
@@ -2011,14 +2005,14 @@ When activated, Google Meet:
 ## Related Features
 - [Browse Module](/guide/feature-modules/webview) - General web browsing
 - [Website Quick Access](/guide/feature-modules/website-quick-access) - Add custom sites
-- [Keyboard Shortcuts](/guide/interface-navigation/shortcuts) - Understanding shortcuts`,
+- [Keyboard Shortcuts](/guide/interface-navigation/shortcuts) - Understanding shortcuts`
       },
       {
-        id: "screen-capture",
-        slug: "screen-capture",
-        title: "Screen Capture Module",
-        description: "Advanced screen recording and capture with macOS toolbar",
-        category: "feature-modules",
+        id: 'screen-capture',
+        slug: 'screen-capture',
+        title: 'Screen Capture Module',
+        description: 'Advanced screen recording and capture with macOS toolbar',
+        category: 'feature-modules',
         readingTime: 5,
         content: `# Screen Capture Module
 **Full macOS screen capture toolbar with advanced options**
@@ -2191,22 +2185,22 @@ Requires **Screen Recording permission**:
 ## Related Features
 - [Snipping Tool](/guide/feature-modules/snipping-tool) - Quick screenshots
 - [Keyboard Shortcuts](/guide/interface-navigation/shortcuts) - Assign shortcuts
-- [Permissions Setup](/guide/permissions-setup/screen-recording) - Grant permissions`,
-      },
-    ],
+- [Permissions Setup](/guide/permissions-setup/screen-recording) - Grant permissions`
+      }
+    ]
   },
   {
-    id: "advanced-usage",
-    title: "Advanced Usage",
-    description: "Tips, tricks, and troubleshooting",
-    icon: "Settings",
+    id: 'advanced-usage',
+    title: 'Advanced Usage',
+    description: 'Tips, tricks, and troubleshooting',
+    icon: 'Settings',
     pages: [
       {
-        id: "tips",
-        slug: "tips",
-        title: "Tips for Best Experience",
-        description: "Optimize your Berri workflow with these expert tips",
-        category: "advanced-usage",
+        id: 'tips',
+        slug: 'tips',
+        title: 'Tips for Best Experience',
+        description: 'Optimize your Berri workflow with these expert tips',
+        category: 'advanced-usage',
         readingTime: 4,
         content: `# Tips for Best Experience
 
@@ -2348,14 +2342,14 @@ Requires **Screen Recording permission**:
 ### Plan Your Setup
 - Free plan: Choose wisely (only 5 modules)
 - Lifetime plan: Enable many, hide unused
-- Both: Put most-used modules first`,
+- Both: Put most-used modules first`
       },
       {
-        id: "troubleshooting",
-        slug: "troubleshooting",
-        title: "Troubleshooting",
-        description: "Common issues and their solutions",
-        category: "advanced-usage",
+        id: 'troubleshooting',
+        slug: 'troubleshooting',
+        title: 'Troubleshooting',
+        description: 'Common issues and their solutions',
+        category: 'advanced-usage',
         readingTime: 6,
         content: `# Troubleshooting
 
@@ -2571,64 +2565,49 @@ Many "bugs" are actually misunderstandings about how shortcuts work:
 
 **Solution**: Check Settings → Keyboard Shortcuts after reordering!
 
-Remember: Most issues are permission-related or misunderstanding dynamic shortcuts. Check permissions first, then verify your module order and shortcut assignments!`,
-      },
-    ],
-  },
-];
+Remember: Most issues are permission-related or misunderstanding dynamic shortcuts. Check permissions first, then verify your module order and shortcut assignments!`
+      }
+    ]
+  }
+]
 
 // Helper functions for navigation
 export function getAllPages(): GuidePage[] {
-  return guideSections.flatMap((section) => section.pages);
+  return guideSections.flatMap((section) => section.pages)
 }
 
-export function getPageBySlug(
-  category: string,
-  slug: string
-): GuidePage | undefined {
-  return getAllPages().find(
-    (page) => page.category === category && page.slug === slug
-  );
+export function getPageBySlug(category: string, slug: string): GuidePage | undefined {
+  return getAllPages().find((page) => page.category === category && page.slug === slug)
 }
 
-export function getNavigationForPage(
-  category: string,
-  slug: string
-): GuideNavigation | null {
-  const allPages = getAllPages();
+export function getNavigationForPage(category: string, slug: string): GuideNavigation | null {
+  const allPages = getAllPages()
   const currentIndex = allPages.findIndex(
     (page) => page.category === category && page.slug === slug
-  );
+  )
 
-  if (currentIndex === -1) return null;
+  if (currentIndex === -1) return null
 
-  const current = allPages[currentIndex];
-  const section = guideSections.find((s) => s.id === category)!;
+  const current = allPages[currentIndex]
+  const section = guideSections.find((s) => s.id === category)!
 
   return {
     current,
     previous: currentIndex > 0 ? allPages[currentIndex - 1] : undefined,
-    next:
-      currentIndex < allPages.length - 1
-        ? allPages[currentIndex + 1]
-        : undefined,
-    section,
-  };
+    next: currentIndex < allPages.length - 1 ? allPages[currentIndex + 1] : undefined,
+    section
+  }
 }
 
-export function getSectionByCategory(
-  category: string
-): GuideSection | undefined {
-  return guideSections.find((section) => section.id === category);
+export function getSectionByCategory(category: string): GuideSection | undefined {
+  return guideSections.find((section) => section.id === category)
 }
 
 export function getTotalPages(): number {
-  return getAllPages().length;
+  return getAllPages().length
 }
 
 export function getPageIndex(category: string, slug: string): number {
-  const allPages = getAllPages();
-  return allPages.findIndex(
-    (page) => page.category === category && page.slug === slug
-  );
+  const allPages = getAllPages()
+  return allPages.findIndex((page) => page.category === category && page.slug === slug)
 }

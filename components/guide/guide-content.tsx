@@ -1,5 +1,6 @@
 'use client'
 
+import React from 'react'
 import { GuidePage } from '@/lib/guide-data'
 import { Clock, BookOpen } from 'lucide-react'
 
@@ -26,7 +27,7 @@ export function GuideContent({ page }: GuideContentProps) {
   // Simple markdown-like content renderer
   const renderContent = (content: string) => {
     const lines = content.split('\n')
-    const elements: JSX.Element[] = []
+    const elements: React.ReactElement[] = []
     let currentList: string[] = []
     let currentKey = 0
 

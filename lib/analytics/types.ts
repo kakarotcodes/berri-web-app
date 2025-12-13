@@ -11,6 +11,8 @@ export type DownloadButtonLocation =
   | 'hero_main'
   | 'mobile_menu'
   | 'scrolled_header'
+  | 'pricing_section'
+  | 'success_page'
 
 // Platform types
 export type Platform = 'mac' | 'windows' | 'linux'

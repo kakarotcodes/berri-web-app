@@ -5,23 +5,23 @@ import { google } from 'googleapis'
 import { NextRequest, NextResponse } from 'next/server'
 
 interface RouteParams {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
 export async function DELETE(request: NextRequest, { params }: RouteParams) {
+  const { id: messageId } = await params
   try {
     // Authenticate user using shared utility
     const user = await authenticateUser(request)
-    
+
     // Guard: Ensure user is authenticated
     if (!user) {
       return NextResponse.json({ error: 'Authentication required' }, { status: 401 })
     }
 
     const userId = user.id
-    const messageId = params.id
 
     // Guard: Ensure Google tokens exist
     const tokens = await getGoogleTokens(userId)
