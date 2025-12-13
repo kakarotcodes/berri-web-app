@@ -51,9 +51,6 @@ class JWTSecretManager {
     }
 
     // 3. Generate runtime secret (development)
-    console.warn('⚠️  JWT_SECRET not found in environment, generating runtime secret for development')
-    console.warn('⚠️  This secret will change on each restart - not suitable for production!')
-    
     this.secret = this.generateSecureSecret()
     return this.secret
   }

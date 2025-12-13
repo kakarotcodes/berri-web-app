@@ -15,16 +15,10 @@ export async function storeElectronRefreshToken(
   userId: string,
   deviceId?: string
 ): Promise<string> {
-  console.log('🔍 storeElectronRefreshToken called with:', { userId, deviceId })
-  
   const supabase = createAdminClient()
-  console.log('✅ Admin client created')
-  
   const refreshToken = generateRefreshToken()
-  console.log('✅ Refresh token generated:', { tokenLength: refreshToken.length })
-  
-  console.log('📤 About to insert into electron_refresh_tokens table...')
-  const { data, error } = await supabase
+
+  const { error } = await supabase
     .from('electron_refresh_tokens')
     .insert({
       user_id: userId,
@@ -32,21 +26,11 @@ export async function storeElectronRefreshToken(
       device_id: deviceId,
       expires_at: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString(), // 90 days
     })
-    .select()
-    .single()
-  
+
   if (error) {
-    console.error('❌ ERROR storing Electron refresh token:', {
-      error: error,
-      code: error.code,
-      message: error.message,
-      details: error.details,
-      hint: error.hint
-    })
     throw error
   }
-  
-  console.log('✅ Refresh token stored successfully:', { hasData: !!data })
+
   return refreshToken
 }
 

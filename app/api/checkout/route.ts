@@ -60,7 +60,6 @@ export const POST = async (request: NextRequest) => {
 
     return await checkoutHandler(modifiedRequest as unknown as NextRequest)
   } catch (error: any) {
-    console.error('Checkout creation error:', error)
     return new Response(
       JSON.stringify({ error: 'Failed to create checkout session. Please try again.' }),
       { status: 500, headers: { 'Content-Type': 'application/json' } }

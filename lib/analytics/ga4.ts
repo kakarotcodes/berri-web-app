@@ -40,20 +40,18 @@ export const sendGA4Event = (
 ): void => {
   // Only track in production
   if (!isProduction()) {
-    console.log('[GA4 Dev Mode]', eventName, params)
     return
   }
 
   // Check if GA4 is loaded
   if (!isGA4Available()) {
-    console.warn('[GA4] gtag not available')
     return
   }
 
   try {
     window.gtag!('event', eventName, params)
-  } catch (error) {
-    console.error('[GA4] Event tracking error:', error)
+  } catch {
+    // Silently fail for analytics errors
   }
 }
 
