@@ -28,8 +28,8 @@ export function GuideSidebar({ sections, onClose }: GuideSidebarProps) {
         const data = JSON.parse(saved)
         setCompletedPages(new Set(data.completed || []))
         setExpandedSections(new Set(data.expanded || ['getting-started']))
-      } catch (e) {
-        console.error('Failed to load guide progress:', e)
+      } catch {
+        // Failed to load guide progress - use defaults
       }
     }
   }, [])

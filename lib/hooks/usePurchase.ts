@@ -62,7 +62,6 @@ export function usePurchase(): UsePurchaseReturn {
         throw new Error('No checkout URL received')
       }
     } catch (err: any) {
-      console.error('Checkout error:', err)
       setError(err.message || 'Something went wrong. Please try again.')
       setLoadingPlan(null)
     }

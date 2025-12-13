@@ -18,14 +18,11 @@ export async function initializeDatabase() {
     const { error } = await supabase.rpc('exec_sql', { sql: schema })
     
     if (error) {
-      console.error('Database initialization error:', error)
       throw error
     }
-    
-    console.log('✅ Database schema initialized successfully')
+
     return { success: true }
   } catch (error) {
-    console.error('Failed to initialize database:', error)
     return { success: false, error }
   }
 }
@@ -55,7 +52,6 @@ export async function storeGoogleTokens(
     .select()
   
   if (updateError) {
-    console.error('Error updating Google tokens:', updateError)
     throw updateError
   }
   
@@ -73,7 +69,6 @@ export async function storeGoogleTokens(
       .select()
     
     if (insertError) {
-      console.error('Error inserting Google tokens:', insertError)
       throw insertError
     }
     
@@ -100,7 +95,6 @@ export async function getGoogleTokens(userId: string) {
       // No tokens found
       return null
     }
-    console.error('Error retrieving Google tokens:', error)
     throw error
   }
   
