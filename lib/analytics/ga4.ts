@@ -81,10 +81,12 @@ export const trackDownload = (
   }
 
   // Send unique event name based on button location
-  const eventNameMap = {
+  const eventNameMap: Record<DownloadButtonLocation, string> = {
     'hero_main': 'download_mac_os_main',
     'mobile_menu': 'download_mac_os_mobile',
     'scrolled_header': 'download_mac_os_header',
+    'pricing_section': 'free_download',
+    'success_page': 'download_mac_os_success',
   }
   const eventName = eventNameMap[buttonLocation]
   sendGA4Event(eventName, params)
