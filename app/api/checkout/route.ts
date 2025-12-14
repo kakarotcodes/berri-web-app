@@ -8,6 +8,7 @@ const PRODUCT_SKUS = {
   monthly: LIFETIME_PRODUCT_SKU,
   yearly: LIFETIME_PRODUCT_SKU,
   lifetime: LIFETIME_PRODUCT_SKU,
+  
 } as const
 
 type PlanType = keyof typeof PRODUCT_SKUS
