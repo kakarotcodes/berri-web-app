@@ -88,9 +88,9 @@ export function HeroSection() {
                 <p className="mx-auto mt-6 max-w-2xl text-pretty text-lg text-muted-foreground">
                   {/* Berri empowers businesses to unlock the full potential of their data with AI-driven analytics, 
                                     automated reporting, and actionable insights that drive growth. */}
-                  Berri is an always‑on‑top workspace for your everyday bits -
-                  clipboard history, screenshots, and notes kept tidy and
-                  instantly searchable so you can stay in flow
+Berri keeps your notes, websites, screenshots, and clipboard always on top.
+Assign your own shortcut keys and open anything instantly — no tab switching, no searching.
+Your entire workspace, one keystroke away.
                 </p>
 
                 <div className="mt-12 flex flex-col gap-4 sm:flex-row sm:justify-center">
