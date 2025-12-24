@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "../globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
+import Snowfall from "@/components/Snowfall";
 
 export const metadata: Metadata = {
   title: "Berri",
@@ -26,6 +27,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <Snowfall />
           {children}
         </ThemeProvider>
         <GoogleAnalytics />

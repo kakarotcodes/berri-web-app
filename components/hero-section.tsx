@@ -78,7 +78,42 @@ export function HeroSection() {
 
                 <h1 className="text-balance text-4xl font-medium sm:text-5xl md:text-6xl">
                   {/* Transform your data into  */}
-                  Less hunting.
+                  <span className="relative inline-block">
+                    <span className="relative">
+                      L
+                      {/* Christmas Santa Hat on the L */}
+                      <svg
+                        className="absolute -top-3 -left-1 w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 sm:-top-4 md:-top-5 transform -rotate-12"
+                        viewBox="0 0 64 64"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        {/* Hat base (red) */}
+                        <path
+                          d="M8 48C8 48 12 32 32 28C52 24 56 40 56 40L54 50C54 50 44 44 32 46C20 48 10 52 8 48Z"
+                          fill="#DC2626"
+                        />
+                        {/* Hat top curve */}
+                        <path
+                          d="M32 28C32 28 38 12 52 16C52 16 56 18 54 24C52 30 48 28 48 28"
+                          fill="#DC2626"
+                        />
+                        {/* White fur trim */}
+                        <ellipse cx="32" cy="50" rx="26" ry="6" fill="#FAFAFA" />
+                        {/* Pompom */}
+                        <circle cx="54" cy="18" r="6" fill="#FAFAFA" />
+                        {/* Subtle shadow on hat */}
+                        <path
+                          d="M32 28C32 28 24 32 20 40"
+                          stroke="#B91C1C"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          opacity="0.3"
+                        />
+                      </svg>
+                    </span>
+                    ess hunting.
+                  </span>
                   <span className="bg-gradient-to-r from-purple-500 via-violet-500 to-teal-500 bg-clip-text text-transparent">
                     {" "}
                     More doing

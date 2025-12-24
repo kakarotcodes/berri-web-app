@@ -64,3 +64,29 @@ html {
     -moz-osx-font-smoothing: grayscale;
   }
 }
+
+/* Snowfall Animation */
+@keyframes snowfall {
+  0% {
+    transform: translateY(-10px) translateX(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(25vh) translateX(calc(var(--drift) * 0.5)) rotate(90deg);
+  }
+  50% {
+    transform: translateY(50vh) translateX(var(--drift)) rotate(180deg);
+  }
+  75% {
+    transform: translateY(75vh) translateX(calc(var(--drift) * 0.5)) rotate(270deg);
+  }
+  100% {
+    transform: translateY(105vh) translateX(0) rotate(360deg);
+  }
+}
+
+.snowflake {
+  animation: snowfall linear infinite;
+  will-change: transform;
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.4);
+}
+
