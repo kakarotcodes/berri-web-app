@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
-import { motion } from "framer-motion";
+import React, { useState, useEffect, useCallback, useRef } from "react";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import {
   Monitor,
   Keyboard,
@@ -9,9 +9,6 @@ import {
   MessageCircle,
   Clipboard,
   FolderOpen,
-  Eye,
-  EyeOff,
-  Zap
 } from "lucide-react";
 
 interface UseCase {
@@ -22,254 +19,264 @@ interface UseCase {
   solution: string;
   shortcut: string;
   color: string;
-  bgGradient: string;
+  gradient: string;
 }
 
 const useCases: UseCase[] = [
   {
     id: "screen-share",
     title: "Screen Share Privacy",
-    icon: <Monitor className="size-8" />,
-    problem: "You're on a video call sharing your screen, but need to check your notes",
-    solution: "Open Berri with your shortcut — you see it, they don't. Write notes, check references, stay professional.",
+    icon: <Monitor className="size-6" />,
+    problem: "You're sharing your screen but need to check private notes",
+    solution: "Open Berri with your shortcut — you see it, they don't. Stay professional.",
     shortcut: "⌘ + Shift + B",
     color: "text-purple-500",
-    bgGradient: "from-purple-500/20 to-violet-500/20",
+    gradient: "from-purple-500 to-violet-600",
   },
   {
     id: "quick-email",
     title: "Quick Email Access",
-    icon: <Mail className="size-8" />,
-    problem: "Need a quick glance at your inbox without losing focus on your current task",
-    solution: "Assign a shortcut like Ctrl+E in Berri settings. One keystroke and your email appears on top. Check, dismiss, continue.",
+    icon: <Mail className="size-6" />,
+    problem: "Need to check inbox without losing focus on current task",
+    solution: "One keystroke and your email appears on top. Check, dismiss, continue.",
     shortcut: "Ctrl + E",
     color: "text-teal-500",
-    bgGradient: "from-teal-500/20 to-cyan-500/20",
+    gradient: "from-teal-500 to-cyan-600",
   },
   {
     id: "whatsapp",
     title: "Instant Messaging",
-    icon: <MessageCircle className="size-8" />,
-    problem: "Important WhatsApp message while coding? Switching apps breaks your flow",
-    solution: "Pin WhatsApp web in Berri's mini browser. Ctrl+W to peek, reply, and get back to code in seconds.",
+    icon: <MessageCircle className="size-6" />,
+    problem: "Important message while coding? Switching apps breaks your flow",
+    solution: "Pin WhatsApp in Berri. Peek, reply, and get back to work in seconds.",
     shortcut: "Ctrl + W",
     color: "text-green-500",
-    bgGradient: "from-green-500/20 to-emerald-500/20",
+    gradient: "from-green-500 to-emerald-600",
   },
   {
     id: "clipboard",
     title: "Clipboard History",
-    icon: <Clipboard className="size-8" />,
+    icon: <Clipboard className="size-6" />,
     problem: "You copied something important 10 copies ago. Gone forever?",
-    solution: "Berri keeps your entire clipboard history. Search, filter, and paste anything you've ever copied.",
+    solution: "Berri keeps your entire clipboard history. Search and paste anything.",
     shortcut: "⌘ + Shift + V",
     color: "text-orange-500",
-    bgGradient: "from-orange-500/20 to-amber-500/20",
+    gradient: "from-orange-500 to-amber-600",
   },
   {
     id: "folders",
     title: "Smart Folders",
-    icon: <FolderOpen className="size-8" />,
-    problem: "Screenshots, links, snippets scattered everywhere. Finding them is a nightmare",
-    solution: "Organize everything into smart folders. Assign shortcuts to each. Your project assets, one keystroke away.",
+    icon: <FolderOpen className="size-6" />,
+    problem: "Screenshots, links, snippets scattered everywhere",
+    solution: "Organize into smart folders. Assign shortcuts. One keystroke away.",
     shortcut: "⌘ + 1, 2, 3...",
     color: "text-blue-500",
-    bgGradient: "from-blue-500/20 to-indigo-500/20",
+    gradient: "from-blue-500 to-indigo-600",
   },
 ];
+
+function UseCaseCard({ useCase, isActive, onClick }: { useCase: UseCase; isActive: boolean; onClick: () => void }) {
+  return (
+    <motion.button
+      onClick={onClick}
+      whileHover={{ x: 8 }}
+      whileTap={{ scale: 0.98 }}
+      className={`w-full text-left p-4 md:p-6 rounded-2xl transition-all duration-300 ${
+        isActive
+          ? "bg-foreground/10 border-2 border-foreground/20"
+          : "bg-transparent border-2 border-transparent hover:bg-foreground/5"
+      }`}
+    >
+      <div className="flex items-center gap-4">
+        <motion.div
+          animate={{ scale: isActive ? 1.1 : 1 }}
+          className={`flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br ${useCase.gradient} text-white`}
+        >
+          {useCase.icon}
+        </motion.div>
+        <div className="flex-1 min-w-0">
+          <p className={`font-semibold text-lg ${isActive ? "text-foreground" : "text-muted-foreground"}`}>
+            {useCase.title}
+          </p>
+          <p className="text-sm text-muted-foreground font-mono">{useCase.shortcut}</p>
+        </div>
+        <motion.div
+          animate={{ scale: isActive ? 1.5 : 1 }}
+          className={`w-2 h-2 rounded-full ${isActive ? "bg-purple-500" : "bg-foreground/20"}`}
+        />
+      </div>
+    </motion.button>
+  );
+}
 
 export function UseCases() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const sectionRef = useRef(null);
+  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
 
   const handleSelect = useCallback((index: number) => {
     setActiveIndex(index);
     setIsAutoPlaying(false);
-    // Resume autoplay after 10 seconds of inactivity
     setTimeout(() => setIsAutoPlaying(true), 10000);
   }, []);
 
   useEffect(() => {
     if (!isAutoPlaying) return;
-
     const interval = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % useCases.length);
     }, 4000);
-
     return () => clearInterval(interval);
   }, [isAutoPlaying]);
 
-  return (
-    <section className="py-24 md:py-32 bg-background relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-500/5 to-transparent pointer-events-none" />
+  const activeUseCase = useCases[activeIndex];
 
-      <div className="mx-auto max-w-7xl px-6 relative">
-        <div className="mb-16 text-center">
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-purple-500/10 via-violet-500/10 to-teal-500/10 px-4 py-2 text-sm font-medium text-primary">
-            <Zap className="size-4" />
-            <span>Real problems, real solutions</span>
-          </div>
-          <h2 className="text-3xl font-bold sm:text-5xl mb-6">
+  return (
+    <section
+      ref={sectionRef}
+      id="use-cases"
+      className="relative py-32 md:py-48 overflow-hidden bg-foreground/[0.02]"
+    >
+      {/* Background elements */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px bg-gradient-to-r from-transparent via-foreground/20 to-transparent" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-px bg-gradient-to-r from-transparent via-foreground/20 to-transparent" />
+      </div>
+
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        {/* Section header */}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-20 md:mb-32"
+        >
+          <span className="inline-block text-sm font-semibold text-teal-500 uppercase tracking-widest mb-4">
+            Use Cases
+          </span>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter mb-6">
             Built for how you
-            <span className="bg-gradient-to-r from-purple-500 via-violet-500 to-teal-500 bg-clip-text text-transparent">
-              {" "}actually work
+            <br />
+            <span className="bg-gradient-to-r from-teal-500 via-cyan-500 to-purple-500 bg-clip-text text-transparent">
+              actually work
             </span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Every feature in Berri solves a real productivity pain point.
-            Here&apos;s what changes when your tools stay on top.
+          <p className="max-w-2xl mx-auto text-lg sm:text-xl text-muted-foreground">
+            Every feature solves a real productivity pain point.
+            Here's what changes when your tools stay on top.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Stack Card Animation */}
-          <div className="relative h-[500px] flex items-center justify-center">
-            {useCases.map((useCase, index) => {
-              const offset = index - activeIndex;
-              const absOffset = Math.abs(offset);
-
-              // Calculate position in stack
-              const isActive = offset === 0;
-              const isBehind = offset < 0;
-
-              // Only show 3 cards max
-              if (absOffset > 2) return null;
-
-              return (
+        {/* Main content */}
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+          {/* Left: Card display */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="relative"
+          >
+            <div className="sticky top-32">
+              <AnimatePresence mode="wait">
                 <motion.div
-                  key={useCase.id}
-                  initial={false}
-                  animate={{
-                    opacity: isActive ? 1 : 0,
-                    scale: isActive ? 1 : 0.95,
-                    y: isActive ? 0 : (isBehind ? -20 : 20),
-                    zIndex: isActive ? 10 : 0,
-                  }}
-                  transition={{
-                    duration: 0.4,
-                    ease: [0.4, 0, 0.2, 1],
-                  }}
-                  onClick={() => handleSelect(index)}
-                  className="absolute w-full max-w-md cursor-pointer"
-                  style={{ pointerEvents: isActive ? 'auto' : 'none' }}
+                  key={activeUseCase.id}
+                  initial={{ opacity: 0, y: 20, rotateX: -10 }}
+                  animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                  exit={{ opacity: 0, y: -20, rotateX: 10 }}
+                  transition={{ duration: 0.5, ease: [0.215, 0.61, 0.355, 1] }}
+                  className="relative"
                 >
-                  <div
-                    className={`
-                      relative rounded-3xl p-8 overflow-hidden
-                      bg-card border border-border
-                      shadow-2xl
-                      ${isActive ? 'ring-2 ring-purple-500/50 shadow-purple-500/20' : ''}
-                    `}
-                  >
-                    {/* Colored gradient overlay */}
-                    <div className={`absolute inset-0 bg-gradient-to-br ${useCase.bgGradient} opacity-50`} />
+                  {/* Card */}
+                  <div className="relative overflow-hidden rounded-3xl bg-background border border-foreground/10 p-8 md:p-10 shadow-2xl">
+                    {/* Gradient background */}
+                    <div className={`absolute inset-0 bg-gradient-to-br ${activeUseCase.gradient} opacity-5`} />
 
-                    {/* Content wrapper - relative to appear above gradient */}
+                    {/* Content */}
                     <div className="relative z-10">
-                      {/* Privacy indicator */}
-                      <div className="absolute -top-4 right-0 flex items-center gap-2 text-xs text-muted-foreground">
-                        {useCase.id === "screen-share" ? (
-                          <>
-                            <EyeOff className="size-3" />
-                            <span>Hidden from others</span>
-                          </>
-                        ) : (
-                          <>
-                            <Eye className="size-3" />
-                            <span>Only you see this</span>
-                          </>
-                        )}
-                      </div>
-
-                      <div className={`mb-6 ${useCase.color}`}>
-                        {useCase.icon}
-                      </div>
-
-                      <div className="space-y-4">
-                        <div>
-                          <p className="text-sm font-medium text-muted-foreground mb-2">The Problem</p>
-                          <p className="text-foreground font-medium">{useCase.problem}</p>
+                      {/* Icon and title */}
+                      <div className="flex items-center gap-4 mb-8">
+                        <div className={`flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br ${activeUseCase.gradient} text-white`}>
+                          {activeUseCase.icon}
                         </div>
-
-                        <div className="h-px bg-gradient-to-r from-transparent via-foreground/20 to-transparent" />
-
                         <div>
-                          <p className="text-sm font-medium text-muted-foreground mb-2">With Berri</p>
-                          <p className="text-foreground">{useCase.solution}</p>
+                          <h3 className="text-2xl font-bold">{activeUseCase.title}</h3>
+                          <div className="flex items-center gap-2 mt-1">
+                            <Keyboard className="size-4 text-muted-foreground" />
+                            <code className="text-sm font-mono text-muted-foreground">
+                              {activeUseCase.shortcut}
+                            </code>
+                          </div>
                         </div>
                       </div>
 
-                      <div className="mt-6 flex items-center gap-2">
-                        <Keyboard className="size-4 text-muted-foreground" />
-                        <code className="text-sm bg-foreground/10 px-3 py-1 rounded-lg font-mono">
-                          {useCase.shortcut}
-                        </code>
+                      {/* Problem */}
+                      <div className="mb-6">
+                        <span className="text-xs font-semibold text-red-500/80 uppercase tracking-wider">The Problem</span>
+                        <p className="mt-2 text-lg text-foreground/80">{activeUseCase.problem}</p>
+                      </div>
+
+                      {/* Divider */}
+                      <div className="h-px bg-gradient-to-r from-transparent via-foreground/20 to-transparent my-6" />
+
+                      {/* Solution */}
+                      <div>
+                        <span className="text-xs font-semibold text-green-500/80 uppercase tracking-wider">With Berri</span>
+                        <p className="mt-2 text-lg text-foreground">{activeUseCase.solution}</p>
                       </div>
                     </div>
+
+                    {/* Decorative elements */}
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-foreground/5 to-transparent rounded-bl-[100px]" />
+                    <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-foreground/5 to-transparent rounded-tr-[80px]" />
                   </div>
-                </motion.div>
-              );
-            })}
-          </div>
 
-          {/* Navigation buttons */}
-          <div className="space-y-8">
-            <div className="space-y-3">
-              {useCases.map((useCase, index) => (
-                <motion.button
-                  key={useCase.id}
-                  onClick={() => handleSelect(index)}
-                  whileHover={{ x: 4 }}
-                  whileTap={{ scale: 0.98 }}
-                  className={`
-                    w-full text-left p-4 rounded-xl transition-colors duration-200
-                    ${activeIndex === index
-                      ? 'bg-gradient-to-r from-purple-500/10 to-violet-500/10 border border-purple-500/30'
-                      : 'hover:bg-muted/50 border border-transparent'
-                    }
-                  `}
-                >
-                  <div className="flex items-center gap-4">
-                    <div className={`
-                      flex size-10 items-center justify-center rounded-lg
-                      ${activeIndex === index ? useCase.color : 'text-muted-foreground'}
-                      bg-background border transition-colors duration-200
-                      [&>svg]:size-5
-                    `}>
-                      {useCase.icon}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className={`font-medium truncate transition-colors duration-200 ${activeIndex === index ? 'text-foreground' : 'text-muted-foreground'}`}>
-                        {useCase.title}
-                      </p>
-                      <p className="text-sm text-muted-foreground truncate">
-                        {useCase.shortcut}
-                      </p>
-                    </div>
+                  {/* Progress bar */}
+                  <div className="mt-4 h-1 bg-foreground/10 rounded-full overflow-hidden">
                     <motion.div
-                      animate={{
-                        scale: activeIndex === index ? 1.25 : 1,
-                        backgroundColor: activeIndex === index ? 'rgb(168, 85, 247)' : 'rgba(156, 163, 175, 0.3)',
-                      }}
-                      transition={{ duration: 0.2 }}
-                      className="size-2 rounded-full"
+                      initial={{ width: "0%" }}
+                      animate={{ width: "100%" }}
+                      transition={{ duration: 4, ease: "linear" }}
+                      key={activeIndex}
+                      className={`h-full bg-gradient-to-r ${activeUseCase.gradient}`}
                     />
                   </div>
-                </motion.button>
-              ))}
+                </motion.div>
+              </AnimatePresence>
             </div>
+          </motion.div>
 
-            <div className="bg-muted/30 rounded-2xl p-6 border">
-              <p className="text-sm text-muted-foreground mb-3">
+          {/* Right: Navigation */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="space-y-3"
+          >
+            {useCases.map((useCase, index) => (
+              <UseCaseCard
+                key={useCase.id}
+                useCase={useCase}
+                isActive={index === activeIndex}
+                onClick={() => handleSelect(index)}
+              />
+            ))}
+
+            {/* Bottom note */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={isInView ? { opacity: 1 } : {}}
+              transition={{ delay: 0.8 }}
+              className="mt-8 p-6 rounded-2xl bg-gradient-to-br from-purple-500/10 to-teal-500/10 border border-foreground/10"
+            >
+              <p className="text-sm text-muted-foreground mb-2">
                 Every shortcut is customizable
               </p>
-              <p className="text-foreground">
-                Open Berri settings and assign your own keyboard shortcuts to any feature.
-                Make it yours.
+              <p className="text-foreground font-medium">
+                Open Berri settings and assign your own keyboard shortcuts.
+                Make it truly yours.
               </p>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
     </section>

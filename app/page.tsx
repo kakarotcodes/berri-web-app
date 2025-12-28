@@ -2,8 +2,8 @@
 
 import { useEffect } from 'react'
 import { HeroSection } from '@/components/hero-section'
-import { UseCases } from '@/components/use-cases'
 import { Features } from '@/components/features'
+import { UseCases } from '@/components/use-cases'
 import { PricingSection } from '@/components/pricing-section'
 import { Footer } from '@/components/footer'
 
@@ -12,7 +12,6 @@ export default function Home() {
     // Handle hash navigation after page fully loads
     if (window.location.hash) {
       const hash = window.location.hash
-      // Small delay to ensure layout is complete
       setTimeout(() => {
         const element = document.querySelector(hash)
         if (element) {
@@ -23,12 +22,12 @@ export default function Home() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-background">
+    <main className="min-h-screen bg-background">
       <HeroSection />
-      <UseCases />
       <Features />
+      <UseCases />
       <PricingSection />
       <Footer />
-    </div>
+    </main>
   )
 }

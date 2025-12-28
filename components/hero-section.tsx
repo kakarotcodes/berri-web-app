@@ -1,544 +1,432 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { Menu, X, Zap } from "lucide-react";
-import { trackDownload } from "@/lib/analytics/ga4";
-import type { DownloadButtonLocation } from "@/lib/analytics/types";
-import { Button } from "@/components/ui/button";
-import { AnimatedGroup } from "@/components/ui/animated-group";
-import { cn } from "@/lib/utils";
+
+import React, { useEffect, useRef, useState } from "react";
+import { motion, useScroll, useTransform, useSpring, useInView } from "framer-motion";
 import Link from "next/link";
-import { InfiniteSlider } from "@/components/ui/infinite-slider";
-import { ProgressiveBlur } from "@/components/ui/progressive-blur";
 import { ThemeToggle } from "@/components/theme-toggle";
-// import { createClient } from "@/lib/supabase/client";
+import { Menu, X } from "lucide-react";
 
-const handleDownload = (
-  e: React.MouseEvent,
-  downloadUrl: string,
-  buttonLocation: DownloadButtonLocation
-) => {
-  e.preventDefault();
+// Magnetic button effect
+function MagneticButton({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
 
-  const versionMatch = downloadUrl.match(/berri-(\d+\.\d+\.\d+)\.dmg/);
-  const version = versionMatch ? versionMatch[1] : "unknown";
+  const handleMouse = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!ref.current) return;
+    const { clientX, clientY } = e;
+    const { left, top, width, height } = ref.current.getBoundingClientRect();
+    const x = (clientX - left - width / 2) * 0.3;
+    const y = (clientY - top - height / 2) * 0.3;
+    setPosition({ x, y });
+  };
 
-  // Track download with GA4
-  trackDownload(buttonLocation, downloadUrl, version);
+  const reset = () => setPosition({ x: 0, y: 0 });
 
-  // Add minimal delay to ensure the tracking request starts before navigation
-  setTimeout(() => {
-    window.location.href = downloadUrl;
-  }, 100);
-};
-
-const transitionVariants = {
-  item: {
-    hidden: {
-      opacity: 0,
-      y: 12,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: "spring" as const,
-        bounce: 0.3,
-        duration: 1.5,
-      },
-    },
-  },
-};
-
-export function HeroSection() {
   return (
-    <>
-      <HeroHeader />
-
-      <main className="overflow-hidden">
-        <section>
-          <div className="relative mx-auto max-w-6xl px-6 pt-32 lg:pb-16 lg:pt-48">
-            <div className="relative z-10 mx-auto max-w-4xl text-center">
-              <AnimatedGroup
-                variants={{
-                  container: {
-                    visible: {
-                      transition: {
-                        staggerChildren: 0.05,
-                        delayChildren: 0.75,
-                      },
-                    },
-                  },
-                  item: transitionVariants.item,
-                }}
-              >
-                <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-purple-500/10 via-violet-500/10 to-teal-500/10 px-4 py-2 text-sm font-medium text-primary">
-                  <Zap className="size-4" />
-                  <span>Private by design</span>
-                </div>
-
-                <h1 className="text-balance text-4xl font-medium sm:text-5xl md:text-6xl">
-                  {/* Transform your data into  */}
-                  <span className="relative inline-block">
-                    <span className="relative">
-                      L
-                      {/* Christmas Santa Hat on the L */}
-                      <svg
-                        className="absolute -top-3 -left-1 w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 sm:-top-4 md:-top-5 transform -rotate-12"
-                        viewBox="0 0 64 64"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        {/* Hat base (red) */}
-                        <path
-                          d="M8 48C8 48 12 32 32 28C52 24 56 40 56 40L54 50C54 50 44 44 32 46C20 48 10 52 8 48Z"
-                          fill="#DC2626"
-                        />
-                        {/* Hat top curve */}
-                        <path
-                          d="M32 28C32 28 38 12 52 16C52 16 56 18 54 24C52 30 48 28 48 28"
-                          fill="#DC2626"
-                        />
-                        {/* White fur trim */}
-                        <ellipse cx="32" cy="50" rx="26" ry="6" fill="#FAFAFA" />
-                        {/* Pompom */}
-                        <circle cx="54" cy="18" r="6" fill="#FAFAFA" />
-                        {/* Subtle shadow on hat */}
-                        <path
-                          d="M32 28C32 28 24 32 20 40"
-                          stroke="#B91C1C"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          opacity="0.3"
-                        />
-                      </svg>
-                    </span>
-                    ess hunting.
-                  </span>
-                  <span className="bg-gradient-to-r from-purple-500 via-violet-500 to-teal-500 bg-clip-text text-transparent">
-                    {" "}
-                    More doing
-                  </span>
-                </h1>
-
-                <p className="mx-auto mt-6 max-w-2xl text-pretty text-lg text-muted-foreground">
-                  {/* Berri empowers businesses to unlock the full potential of their data with AI-driven analytics, 
-                                    automated reporting, and actionable insights that drive growth. */}
-Berri keeps your notes, websites, screenshots, and clipboard always on top.
-Assign your own shortcut keys and open anything instantly — no tab switching, no searching.
-Your entire workspace, one keystroke away.
-                </p>
-
-                <div className="mt-12 flex flex-col gap-4 sm:flex-row sm:justify-center">
-                  <Button asChild size="lg" className="rounded-full">
-                    <Link href="/guide" className="flex items-center gap-2">
-                      <svg
-                        className="size-5"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                      >
-                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
-                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
-                      </svg>
-                      Get Started Guide
-                    </Link>
-                  </Button>
-                  <Button
-                    asChild
-                    variant="outline"
-                    size="lg"
-                    className="rounded-full"
-                  >
-                    <a
-                      href="#plans"
-                      className="flex items-center gap-2"
-                    >
-                      <svg
-                        className="size-5"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                      >
-                        <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
-                      </svg>
-                      Download for macOS
-                    </a>
-                  </Button>
-                </div>
-
-                <div className="mt-16">
-                  <video
-                    className="mx-auto rounded-2xl shadow-2xl max-w-4xl w-full"
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                  >
-                    <source
-                      src="https://jkrehaebvmsjnymdtysa.supabase.co/storage/v1/object/public/web-app/berri_updated_video_web.mp4"
-                      type="video/mp4"
-                    />
-                    Your browser does not support the video tag.
-                  </video>
-                </div>
-
-                {/* <div className="mt-8 text-sm text-muted-foreground">
-                  No credit card required • 14-day free trial
-                </div> */}
-              </AnimatedGroup>
-            </div>
-          </div>
-        </section>
-        {/* <LogoCloud /> */}
-      </main>
-    </>
+    <motion.div
+      ref={ref}
+      onMouseMove={handleMouse}
+      onMouseLeave={reset}
+      animate={{ x: position.x, y: position.y }}
+      transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
+      className={className}
+    >
+      {children}
+    </motion.div>
   );
 }
 
-const menuItems = [
-  { name: "Features", href: "#features" },
-  { name: "Guide", href: "/guide" },
-  // { name: "Pricing", href: "#pricing" },
-  { name: "About", href: "#about" },
-  { name: "Contact", href: "#contact" },
-];
+// Animated text that reveals character by character
+function AnimatedTitle({ text, className = "", delay = 0 }: { text: string; className?: string; delay?: number }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-// interface User {
-//   id: string;
-//   email?: string;
-//   user_metadata?: {
-//     full_name?: string;
-//     avatar_url?: string;
-//   };
-// }
+  return (
+    <span ref={ref} className={className}>
+      {text.split("").map((char, i) => (
+        <motion.span
+          key={i}
+          initial={{ opacity: 0, y: 100, rotateX: -90 }}
+          animate={isInView ? { opacity: 1, y: 0, rotateX: 0 } : {}}
+          transition={{
+            duration: 0.5,
+            delay: delay + i * 0.03,
+            ease: [0.215, 0.61, 0.355, 1],
+          }}
+          className="inline-block"
+          style={{ transformOrigin: "bottom" }}
+        >
+          {char === " " ? "\u00A0" : char}
+        </motion.span>
+      ))}
+    </span>
+  );
+}
 
-// interface SessionData {
-//   user: User | null;
-//   tokenStatus?: {
-//     hasTokens: boolean;
-//     expired: boolean;
-//     expiresAt: string;
-//     scopes: string[];
-//   };
-// }
+// Cursor follower
+function CursorFollower() {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
 
-const HeroHeader = () => {
-  const [menuState, setMenuState] = React.useState(false);
-  const [isScrolled, setIsScrolled] = React.useState(false);
-  // const [sessionData, setSessionData] = useState<SessionData>({ user: null });
-  // const [loading, setLoading] = useState(true);
-  // const supabase = createClient();
-
-  React.useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
     };
+
+    const handleHoverStart = () => setIsHovering(true);
+    const handleHoverEnd = () => setIsHovering(false);
+
+    window.addEventListener("mousemove", handleMouseMove);
+
+    // Add hover detection for interactive elements
+    const interactiveElements = document.querySelectorAll("a, button, [role='button']");
+    interactiveElements.forEach((el) => {
+      el.addEventListener("mouseenter", handleHoverStart);
+      el.addEventListener("mouseleave", handleHoverEnd);
+    });
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      interactiveElements.forEach((el) => {
+        el.removeEventListener("mouseenter", handleHoverStart);
+        el.removeEventListener("mouseleave", handleHoverEnd);
+      });
+    };
+  }, []);
+
+  return (
+    <motion.div
+      className="fixed top-0 left-0 w-4 h-4 rounded-full bg-purple-500 mix-blend-difference pointer-events-none z-[100] hidden lg:block"
+      animate={{
+        x: mousePosition.x - 8,
+        y: mousePosition.y - 8,
+        scale: isHovering ? 3 : 1,
+      }}
+      transition={{ type: "spring", stiffness: 500, damping: 28 }}
+    />
+  );
+}
+
+// Navigation
+function Navigation() {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // useEffect(() => {
-  //   const checkAuth = async () => {
-  //     try {
-  //       // Check server-side session via Supabase SSR
-  //       const response = await fetch("/api/auth/session", {
-  //         method: "GET",
-  //         credentials: "include",
-  //       });
-
-  //       if (response.ok) {
-  //         const data = await response.json();
-  //         if (data.user) {
-  //           setSessionData(data);
-  //           setLoading(false);
-  //           return;
-  //         }
-  //       }
-
-  //       // If no valid session, check for auth success indicators
-  //       await checkNewAuthCompletion();
-  //     } catch (error) {
-  //       console.error("Failed to check session:", error);
-  //       await checkNewAuthCompletion();
-  //     }
-  //   };
-
-  //   const checkNewAuthCompletion = async () => {
-  //     // Check for auth success indicators (new authentication)
-  //     const authSuccess = sessionStorage.getItem("auth_success");
-  //     const urlParams = new URLSearchParams(window.location.search);
-  //     const urlAuthSuccess = urlParams.get("auth_success");
-
-  //     if (authSuccess || urlAuthSuccess) {
-  //       // Auth just completed, refresh session from server
-  //       const response = await fetch("/api/auth/session", {
-  //         method: "GET",
-  //         credentials: "include",
-  //       });
-
-  //       if (response.ok) {
-  //         const data = await response.json();
-  //         if (data.user) {
-  //           setSessionData(data);
-  //         }
-  //       }
-
-  //       // Clear the temporary flags
-  //       sessionStorage.removeItem("auth_success");
-  //       if (urlAuthSuccess) {
-  //         const url = new URL(window.location.href);
-  //         url.searchParams.delete("auth_success");
-  //         window.history.replaceState({}, "", url.toString());
-  //       }
-  //     }
-
-  //     setLoading(false);
-  //   };
-
-  //   // Initial auth check
-  //   checkAuth();
-
-  //   // Listen for real-time auth changes
-  //   const {
-  //     data: { subscription },
-  //   } = supabase.auth.onAuthStateChange(async (event, session) => {
-  //     if (event === "SIGNED_IN" && session) {
-  //       // Refresh session data when signed in
-  //       checkAuth();
-  //     } else if (event === "SIGNED_OUT") {
-  //       setSessionData({ user: null });
-  //     }
-  //   });
-
-  //   return () => {
-  //     subscription.unsubscribe();
-  //   };
-  // }, [supabase.auth]);
-
-  // const handleLogout = async () => {
-  //   try {
-  //     // Call secure logout API
-  //     await fetch("/api/auth/session", {
-  //       method: "DELETE",
-  //       credentials: "include",
-  //     });
-
-  //     // Clear client state
-  //     setSessionData({ user: null });
-  //     sessionStorage.removeItem("auth_success");
-
-  //     // Reload to clear any remaining state
-  //     window.location.reload();
-  //   } catch (error) {
-  //     console.error("Logout error:", error);
-  //   }
-  // };
+  const menuItems = [
+    { name: "Features", href: "#features" },
+    { name: "Use Cases", href: "#use-cases" },
+    { name: "Guide", href: "/guide" },
+  ];
 
   return (
-    <header>
+    <motion.header
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.8, ease: [0.215, 0.61, 0.355, 1] }}
+      className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 py-4"
+    >
       <nav
-        data-state={menuState && "active"}
-        className="fixed group z-20 w-full px-2"
+        className={`mx-auto max-w-6xl rounded-full px-4 sm:px-6 py-3 transition-all duration-500 ${
+          isScrolled
+            ? "bg-background/80 backdrop-blur-xl border border-white/10 shadow-lg"
+            : "bg-transparent"
+        }`}
       >
-        <div
-          className={cn(
-            "mx-auto mt-2 max-w-6xl px-6 transition-all duration-300 lg:px-12",
-            isScrolled &&
-              "bg-background/50 max-w-4xl rounded-2xl border backdrop-blur-lg lg:px-5"
-          )}
-        >
-          <div className="relative flex flex-wrap items-center justify-between gap-6 py-3 lg:gap-0 lg:py-4">
-            <div className="flex w-full justify-between lg:w-auto">
+        <div className="flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-3 group">
+            <motion.div
+              whileHover={{ rotate: 360 }}
+              transition={{ duration: 0.6 }}
+            >
+              <img
+                src="/assets/logos/berri-logo.png"
+                alt="Berri"
+                className="size-9 rounded-xl"
+              />
+            </motion.div>
+            <span className="text-xl font-bold tracking-tight">Berri</span>
+          </Link>
+
+          <div className="hidden md:flex items-center gap-1">
+            {menuItems.map((item) => (
+              <MagneticButton key={item.name}>
+                <Link
+                  href={item.href}
+                  className="relative px-5 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors group"
+                >
+                  {item.name}
+                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 h-px w-0 bg-gradient-to-r from-purple-500 to-teal-500 group-hover:w-full transition-all duration-300" />
+                </Link>
+              </MagneticButton>
+            ))}
+          </div>
+
+          <div className="flex items-center gap-3 sm:gap-4">
+            <ThemeToggle />
+            <MagneticButton className="hidden sm:block">
               <Link
-                href="/"
-                aria-label="home"
-                className="flex items-center space-x-2"
+                href="#plans"
+                className="inline-flex items-center gap-2 px-5 sm:px-6 py-2.5 text-sm font-semibold rounded-full bg-foreground text-background hover:scale-105 transition-transform"
               >
-                <BerriLogo />
+                <span>Get Started</span>
+                <motion.span
+                  animate={{ x: [0, 4, 0] }}
+                  transition={{ repeat: Infinity, duration: 1.5 }}
+                >
+                  →
+                </motion.span>
               </Link>
+            </MagneticButton>
 
-              <button
-                onClick={() => setMenuState(!menuState)}
-                aria-label={menuState == true ? "Close Menu" : "Open Menu"}
-                className="relative z-20 -m-2.5 -mr-4 block cursor-pointer p-2.5 lg:hidden"
+            {/* Mobile menu button */}
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="md:hidden p-2 rounded-full hover:bg-foreground/10 transition-colors"
+            >
+              {menuOpen ? <X className="size-5" /> : <Menu className="size-5" />}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile menu */}
+        <motion.div
+          initial={false}
+          animate={{ height: menuOpen ? "auto" : 0, opacity: menuOpen ? 1 : 0 }}
+          className="md:hidden overflow-hidden"
+        >
+          <div className="pt-4 pb-2 space-y-2">
+            {menuItems.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                onClick={() => setMenuOpen(false)}
+                className="block px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
               >
-                <Menu className="group-data-[state=active]:rotate-180 group-data-[state=active]:scale-0 group-data-[state=active]:opacity-0 m-auto size-6 duration-200" />
-                <X className="group-data-[state=active]:rotate-0 group-data-[state=active]:scale-100 group-data-[state=active]:opacity-100 absolute inset-0 m-auto size-6 -rotate-180 scale-0 opacity-0 duration-200" />
-              </button>
-            </div>
-
-            <div className="absolute inset-0 m-auto hidden size-fit lg:block">
-              <ul className="flex gap-8 text-sm">
-                {menuItems.map((item, index) => (
-                  <li key={index}>
-                    <Link
-                      href={item.href}
-                      className="text-muted-foreground hover:text-accent-foreground block duration-150"
-                    >
-                      <span>{item.name}</span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="bg-background group-data-[state=active]:block lg:group-data-[state=active]:flex mb-6 hidden w-full flex-wrap items-center justify-end space-y-8 rounded-3xl border p-6 shadow-2xl shadow-zinc-300/20 md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none dark:shadow-none dark:lg:bg-transparent">
-              <div className="lg:hidden">
-                <ul className="space-y-6 text-base">
-                  {menuItems.map((item, index) => (
-                    <li key={index}>
-                      <Link
-                        href={item.href}
-                        className="text-muted-foreground hover:text-accent-foreground block duration-150"
-                      >
-                        <span>{item.name}</span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
-                <ThemeToggle />
-                {/* {loading ? (
-                  <div className="animate-pulse">
-                    <div className="h-8 w-8 bg-gray-200 rounded-full"></div>
-                  </div>
-                ) : sessionData.user ? (
-                  <div className="flex items-center space-x-3">
-                    <div className="flex items-center space-x-2">
-                      <div className="flex size-8 items-center justify-center rounded-full bg-gradient-to-br from-purple-500 via-violet-500 to-teal-500">
-                        <User className="size-4 text-white" />
-                      </div>
-                      <span className="text-sm text-muted-foreground">
-                        {sessionData.user.user_metadata?.full_name ||
-                          sessionData.user.email}
-                      </span>
-                    </div>
-                    <button
-                      onClick={handleLogout}
-                      className="text-sm text-muted-foreground hover:text-accent-foreground"
-                    >
-                      Logout
-                    </button>
-                  </div>
-                ) : (
-                  <> */}
-                <Button
-                  asChild
-                  size="sm"
-                  className={cn(isScrolled && "lg:hidden")}
-                >
-                  <a href="#plans">
-                    <span>Download for macOS</span>
-                  </a>
-                </Button>
-                <Button
-                  asChild
-                  size="sm"
-                  className={cn(isScrolled ? "lg:inline-flex" : "hidden")}
-                >
-                  <a href="#plans">
-                    <span>Download for macOS</span>
-                  </a>
-                </Button>
-                {/* </>
-                )} */}
-              </div>
-            </div>
+                {item.name}
+              </Link>
+            ))}
+            <Link
+              href="#plans"
+              onClick={() => setMenuOpen(false)}
+              className="block px-4 py-2 text-sm font-semibold text-purple-500"
+            >
+              Get Started →
+            </Link>
           </div>
-        </div>
+        </motion.div>
       </nav>
-    </header>
+    </motion.header>
   );
-};
+}
 
-const LogoCloud = () => {
+// Marquee text
+function MarqueeText() {
   return (
-    <section className="bg-background pb-16 md:pb-32">
-      <div className="group relative m-auto max-w-6xl px-6">
-        <div className="flex flex-col items-center md:flex-row">
-          <div className="inline md:max-w-44 md:border-r md:pr-6">
-            <p className="text-end text-sm text-muted-foreground">
-              Trusted by leading companies
-            </p>
-          </div>
-          <div className="relative py-6 md:w-[calc(100%-11rem)]">
-            <InfiniteSlider speedOnHover={20} duration={40} gap={112}>
-              <div className="flex">
-                <img
-                  className="mx-auto h-5 w-fit dark:invert"
-                  src="https://html.tailus.io/blocks/customers/nvidia.svg"
-                  alt="Nvidia Logo"
-                  height="20"
-                  width="auto"
-                />
-              </div>
-              <div className="flex">
-                <img
-                  className="mx-auto h-4 w-fit dark:invert"
-                  src="https://html.tailus.io/blocks/customers/github.svg"
-                  alt="GitHub Logo"
-                  height="16"
-                  width="auto"
-                />
-              </div>
-              <div className="flex">
-                <img
-                  className="mx-auto h-5 w-fit dark:invert"
-                  src="https://html.tailus.io/blocks/customers/nike.svg"
-                  alt="Nike Logo"
-                  height="20"
-                  width="auto"
-                />
-              </div>
-              <div className="flex">
-                <img
-                  className="mx-auto h-4 w-fit dark:invert"
-                  src="https://html.tailus.io/blocks/customers/laravel.svg"
-                  alt="Laravel Logo"
-                  height="16"
-                  width="auto"
-                />
-              </div>
-              <div className="flex">
-                <img
-                  className="mx-auto h-6 w-fit dark:invert"
-                  src="https://html.tailus.io/blocks/customers/openai.svg"
-                  alt="OpenAI Logo"
-                  height="24"
-                  width="auto"
-                />
-              </div>
-            </InfiniteSlider>
-
-            <div className="bg-linear-to-r from-background absolute inset-y-0 left-0 w-20"></div>
-            <div className="bg-linear-to-l from-background absolute inset-y-0 right-0 w-20"></div>
-            <ProgressiveBlur
-              className="pointer-events-none absolute left-0 top-0 h-full w-20"
-              direction="left"
-              blurIntensity={1}
-            />
-            <ProgressiveBlur
-              className="pointer-events-none absolute right-0 top-0 h-full w-20"
-              direction="right"
-              blurIntensity={1}
-            />
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
-const BerriLogo = ({ className }: { className?: string }) => {
-  return (
-    <div className={cn("flex items-center space-x-3", className)}>
-      <img
-        src="/assets/logos/berri-logo.png"
-        alt="Berri Logo"
-        className="size-8 rounded-lg"
-      />
-      <span className="text-xl font-bold leading-none">Berri</span>
+    <div className="absolute bottom-0 left-0 right-0 overflow-hidden py-4 bg-foreground/5 backdrop-blur-sm">
+      <motion.div
+        animate={{ x: [0, -1000] }}
+        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        className="flex gap-8 whitespace-nowrap"
+      >
+        {[...Array(4)].map((_, i) => (
+          <span key={i} className="text-sm font-medium text-muted-foreground flex items-center gap-8">
+            <span>Always on top</span>
+            <span className="text-purple-500">◆</span>
+            <span>Keyboard shortcuts</span>
+            <span className="text-teal-500">◆</span>
+            <span>Clipboard history</span>
+            <span className="text-purple-500">◆</span>
+            <span>Mini browser</span>
+            <span className="text-teal-500">◆</span>
+            <span>Smart notes</span>
+            <span className="text-purple-500">◆</span>
+          </span>
+        ))}
+      </motion.div>
     </div>
   );
-};
+}
+
+export function HeroSection() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"],
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8]);
+
+  const springY = useSpring(y, { stiffness: 100, damping: 30 });
+
+  return (
+    <>
+      <CursorFollower />
+      <Navigation />
+
+      <section
+        ref={containerRef}
+        className="relative min-h-[100vh] flex items-center justify-center overflow-hidden bg-background"
+      >
+        {/* Animated gradient orbs */}
+        <div className="absolute inset-0 overflow-hidden">
+          <motion.div
+            animate={{
+              scale: [1, 1.2, 1],
+              x: [0, 50, 0],
+              y: [0, 30, 0],
+            }}
+            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            className="absolute -top-1/2 -left-1/4 w-[600px] sm:w-[800px] h-[600px] sm:h-[800px] rounded-full bg-purple-500/20 blur-[100px] sm:blur-[120px]"
+          />
+          <motion.div
+            animate={{
+              scale: [1.2, 1, 1.2],
+              x: [0, -50, 0],
+              y: [0, -30, 0],
+            }}
+            transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+            className="absolute -bottom-1/2 -right-1/4 w-[400px] sm:w-[600px] h-[400px] sm:h-[600px] rounded-full bg-teal-500/20 blur-[100px] sm:blur-[120px]"
+          />
+        </div>
+
+        {/* Grid pattern */}
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: `linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)`,
+            backgroundSize: '60px 60px',
+          }}
+        />
+
+        <motion.div
+          style={{ y: springY, opacity, scale }}
+          className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 py-24 sm:py-32 text-center"
+        >
+          {/* Badge */}
+          <motion.div
+            initial={{ opacity: 0, y: 20, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mb-6 sm:mb-8"
+          >
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-gradient-to-r from-purple-500/10 to-teal-500/10 border border-purple-500/20">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
+              </span>
+              Now available for macOS
+            </span>
+          </motion.div>
+
+          {/* Main heading - BOLD awwwards style */}
+          <h1 className="text-[12vw] sm:text-[10vw] md:text-[8vw] lg:text-[7vw] font-black tracking-tighter leading-[0.85] mb-6 sm:mb-8">
+            <span className="block">
+              <AnimatedTitle text="Less " />
+              <AnimatedTitle text="hunting." className="text-muted-foreground/30" delay={0.15} />
+            </span>
+            <span className="block mt-2 sm:mt-4">
+              <AnimatedTitle text="More " delay={0.6} />
+              <span className="bg-gradient-to-r from-purple-500 via-violet-500 to-teal-500 bg-clip-text text-transparent">
+                <AnimatedTitle text="doing." delay={0.6} />
+              </span>
+            </span>
+          </h1>
+
+          {/* Description */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.2 }}
+            className="max-w-xl sm:max-w-2xl mx-auto text-base sm:text-lg md:text-xl text-muted-foreground mb-8 sm:mb-12 leading-relaxed px-4"
+          >
+            Your notes, websites, screenshots, and clipboard—always on top.
+            <span className="text-foreground font-medium"> One keystroke away.</span>
+          </motion.p>
+
+          {/* CTA Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.4 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 px-4"
+          >
+            <MagneticButton>
+              <Link
+                href="#plans"
+                className="group relative inline-flex items-center gap-3 px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold rounded-full bg-foreground text-background overflow-hidden w-full sm:w-auto justify-center"
+              >
+                <span className="relative z-10">Download for macOS</span>
+                <motion.span
+                  className="relative z-10"
+                  animate={{ x: [0, 5, 0] }}
+                  transition={{ repeat: Infinity, duration: 1.5 }}
+                >
+                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                  </svg>
+                </motion.span>
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-purple-600 to-teal-600"
+                  initial={{ x: "-100%" }}
+                  whileHover={{ x: 0 }}
+                  transition={{ duration: 0.3 }}
+                />
+              </Link>
+            </MagneticButton>
+
+            <MagneticButton>
+              <Link
+                href="/guide"
+                className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-medium rounded-full border border-foreground/20 hover:bg-foreground/5 transition-colors w-full sm:w-auto justify-center"
+              >
+                <span>Read the Guide</span>
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </Link>
+            </MagneticButton>
+          </motion.div>
+
+        </motion.div>
+
+        {/* Marquee */}
+        <MarqueeText />
+      </section>
+
+      {/* Video Section */}
+      <section className="relative py-12 sm:py-20 bg-background overflow-hidden">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 100 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 1 }}
+            className="relative rounded-2xl sm:rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-purple-500/10"
+          >
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-10 pointer-events-none" />
+            <video
+              className="w-full"
+              autoPlay
+              muted
+              loop
+              playsInline
+            >
+              <source
+                src="https://jkrehaebvmsjnymdtysa.supabase.co/storage/v1/object/public/web-app/berri_updated_video_web.mp4"
+                type="video/mp4"
+              />
+            </video>
+          </motion.div>
+        </div>
+      </section>
+    </>
+  );
+}

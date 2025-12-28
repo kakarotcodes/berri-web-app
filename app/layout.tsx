@@ -2,12 +2,11 @@ import type { Metadata } from "next";
 import "../globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
-import Snowfall from "@/components/Snowfall";
 
 export const metadata: Metadata = {
-  title: "Berri",
+  title: "Berri - Less Hunting, More Doing",
   description:
-    "AI-powered analytics platform that transforms your data into actionable business intelligence.",
+    "Your always-on-top workspace for notes, websites, screenshots, and clipboard. One keystroke away.",
   icons: {
     icon: "/assets/logos/berri-logo.png",
   },
@@ -20,14 +19,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body>
+      <body className="noise">
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
         >
-          <Snowfall />
           {children}
         </ThemeProvider>
         <GoogleAnalytics />
