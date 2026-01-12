@@ -66,7 +66,7 @@ export function PricingSection() {
     if (planId === 'free') {
       // Handle free download
       setDownloadingFree(true)
-      const downloadUrl = 'https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.3.0.dmg'
+      const downloadUrl = 'https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.3.1.dmg'
       trackDownload('pricing_section', downloadUrl, '1.2.0')
       setTimeout(() => {
         window.location.href = downloadUrl

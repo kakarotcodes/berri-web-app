@@ -28,7 +28,7 @@ function SuccessPageContent() {
 
   const handleDownload = (e: React.MouseEvent) => {
     e.preventDefault()
-    const downloadUrl = 'https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.2.0.dmg'
+    const downloadUrl = 'https://berri-downloads.s3.ap-south-1.amazonaws.com/releases/stable/berri-1.3.1.dmg'
     trackDownload('success_page', downloadUrl, '1.2.0')
     setTimeout(() => {
       window.location.href = downloadUrl
